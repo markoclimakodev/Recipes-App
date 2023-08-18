@@ -17,8 +17,8 @@ function Login() {
 
   const handleSubmitLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('user', JSON.stringify(form));
-    navigate('/receitas');
+    localStorage.setItem('user', JSON.stringify({ email: form.email }));
+    navigate('/meals');
   };
 
   const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
