@@ -1,0 +1,100 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  width: 100%;
+}
+
+.navbar {
+  background-color: var(--yellow);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.nav_actions {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.page_title_container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.page_title_container h1 {
+  color: var(--purple);
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 0.13rem;
+  text-transform: uppercase;
+}
+
+.form {
+  align-items: center;
+  background: var(--purple);
+  border-radius: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  padding-bottom: 0.5rem;
+  width: 21.12rem;
+}
+
+.search_input_container {
+  display: flex;
+  width: 100%;
+}
+
+
+.search_input_container input {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 0.3rem;
+  flex: 1;
+  height: 2.5rem;
+  padding-left: 1rem;
+}
+
+.search_input_container input:focus-within {
+  border: 1px solid var(--yellow);
+  outline: var(--yellow) 1px solid;
+}
+
+.filters_container {
+  color: var(--white);
+  display: flex;
+  font-size: 0.8rem;
+  gap: 1.29rem;
+  padding: 1rem 4rem;
+  white-space: nowrap;
+}
+
+.filters_container label {
+  align-items: center;
+  display: flex;
+  gap: 0.32rem;
+}
+
+.search_button {
+  align-items: center;
+  background: var(--yellow);
+  border-radius: 0.3rem;
+  color: var(--white);
+  display: flex;
+  font-size: 1rem;
+  font-weight: 700;
+  justify-content: center;
+  letter-spacing: 0.02rem;
+  padding: 0.1rem 0.5rem;
+  text-transform: uppercase;
+  width: 13rem;
+}
+
+.search_button:hover {
+  background: var(--button-hover);
+}
