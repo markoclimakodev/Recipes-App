@@ -8,8 +8,8 @@
 .navbar {
   background-color: var(--yellow);
   display: flex;
-  padding: 0.5rem;
   justify-content: space-between;
+  padding: 0.5rem;
 }
 
 .nav_actions {
@@ -29,26 +29,25 @@
   color: var(--purple);
   font-size: 1.25rem;
   font-weight: 900;
-  letter-spacing: 0.13125rem;
+  letter-spacing: 0.13rem;
   text-transform: uppercase;
 }
 
 .form {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: auto;
-  width: 100%;
   background: var(--purple);
-  width: 21.125rem;
   border-radius: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
   padding-bottom: 0.5rem;
+  width: 21.12rem;
 }
 
 .search_input_container {
-  width: 100%;
   display: flex;
+  width: 100%;
 }
 
 
