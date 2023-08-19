@@ -1,8 +1,6 @@
-import Header from '../../component/Header';
-
 function Drinks() {
   return (
-    <Header />
+    <h1>Drinks</h1>
   );
 }
 
