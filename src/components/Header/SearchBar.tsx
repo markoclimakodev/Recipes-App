@@ -1,19 +1,16 @@
 import { useState } from 'react';
 import styles from './header.module.css';
+import useFetch from '../../CustomHooks/useFetch';
+import { FormSearch, SearchBarProps } from '../../types';
 
-const initialState = {
+const initialState: FormSearch = {
   searchInput: '',
-  searchRadio: '',
+  searchRadio: 'ingredient',
 };
 
-const fetchRecipes = async (searchURL: string) => {
-  const response = await fetch(searchURL);
-  const data = await response.json();
-  return data;
-};
-
-function SearchBar() {
-  const [formSearch, setFormSearch] = useState(initialState);
+function SearchBar({ pageTitle }: SearchBarProps) {
+  const [formSearch, setFormSearch] = useState<FormSearch>(initialState);
+  const { fetchRecipes } = useFetch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -23,18 +20,19 @@ function SearchBar() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { searchInput, searchRadio } = formSearch;
-    if (searchRadio === 'ingredient') {
-      fetchRecipes(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`);
+    const drinksOrRecipes = pageTitle === 'Drinks' ? 'cocktail' : 'meal';
+    const searchOrFilterMap = {
+      ingredient: 'filter.php?i',
+      name: 'search.php?s',
+      first_letter: 'search.php?f',
+    };
+    const searchOrFilter = searchOrFilterMap[searchRadio];
+
+    if (searchRadio === 'first_letter' && searchInput.length > 1) {
+      window.alert('Your search must have only 1 (one) character');
     }
-    if (searchRadio === 'name') {
-      fetchRecipes(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`);
-    }
-    if (searchRadio === 'first_letter') {
-      if (searchInput.length > 1) {
-        window.alert('Your search must have only 1 (one) character');
-      }
-      fetchRecipes(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`);
-    }
+
+    fetchRecipes(`https://www.the${drinksOrRecipes}db.com/api/json/v1/1/${searchOrFilter}=${searchInput}`);
   };
 
   return (
