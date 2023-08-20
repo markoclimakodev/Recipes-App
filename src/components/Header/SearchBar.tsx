@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import styles from './header.module.css';
-import useFetch from '../../CustomHooks/useFetch';
 import { FormSearch, SearchBarProps } from '../../types';
+import useFetch from '../../CustomHooks/useFetch';
 
 const initialState: FormSearch = {
   searchInput: '',
@@ -10,14 +12,15 @@ const initialState: FormSearch = {
 
 function SearchBar({ pageTitle }: SearchBarProps) {
   const [formSearch, setFormSearch] = useState<FormSearch>(initialState);
-  const { fetchRecipes } = useFetch();
+  // const { data, fetchRecipes } = useFetch();
+  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormSearch((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { searchInput, searchRadio } = formSearch;
     const drinksOrRecipes = pageTitle === 'Drinks' ? 'cocktail' : 'meal';
@@ -32,7 +35,16 @@ function SearchBar({ pageTitle }: SearchBarProps) {
       window.alert('Your search must have only 1 (one) character');
     }
 
-    fetchRecipes(`https://www.the${drinksOrRecipes}db.com/api/json/v1/1/${searchOrFilter}=${searchInput}`);
+    const URL = `https://www.the${drinksOrRecipes}db.com/api/json/v1/1/${searchOrFilter}=${searchInput}`;
+    const response = await fetch(URL);
+    const data = await response.json();
+    console.log(URL, data);
+    const recipes = 'drinks' in data ? data.drinks : data.meals;
+    if (recipes.length === 1) {
+      const patchRedirect = 'drinks' in data ? `/drinks/${data.drinks[0].idDrink}`
+        : `/meals/${data.meals[0].idMeal}`;
+      navigate(patchRedirect);
+    }
   };
 
   return (

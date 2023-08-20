@@ -1,14 +1,20 @@
 import { useState } from 'react';
+import { DrinksResponse, MealsResponse } from '../types';
+
+const initalState = {
+  drinks: [],
+  meals: [],
+};
 
 function useFetch() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<DrinksResponse | MealsResponse>(initalState);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('success');
 
   const fetchRecipes = async (searchURL: string) => {
     try {
       const response = await fetch(searchURL);
-      const dataAPI = await response.json();
+      const dataAPI: DrinksResponse | MealsResponse = await response.json();
       setData(dataAPI);
     } catch (error: any) {
       setErrorMsg(error.message);
