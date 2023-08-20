@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './header.module.css';
 import { FormSearch, SearchBarProps } from '../../types';
-import useFetch from '../../CustomHooks/useFetch';
 
 const initialState: FormSearch = {
   searchInput: '',
@@ -12,8 +11,17 @@ const initialState: FormSearch = {
 
 function SearchBar({ pageTitle }: SearchBarProps) {
   const [formSearch, setFormSearch] = useState<FormSearch>(initialState);
-  // const { data, fetchRecipes } = useFetch();
   const navigate = useNavigate();
+
+  const fetchRecipes = async (searchURL: string) => {
+    try {
+      const response = await fetch(searchURL);
+      const dataAPI = await response.json();
+      return dataAPI;
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -36,9 +44,7 @@ function SearchBar({ pageTitle }: SearchBarProps) {
     }
 
     const URL = `https://www.the${drinksOrRecipes}db.com/api/json/v1/1/${searchOrFilter}=${searchInput}`;
-    const response = await fetch(URL);
-    const data = await response.json();
-    console.log(URL, data);
+    const data = await fetchRecipes(URL);
     const recipes = 'drinks' in data ? data.drinks : data.meals;
     if (recipes.length === 1) {
       const patchRedirect = 'drinks' in data ? `/drinks/${data.drinks[0].idDrink}`
