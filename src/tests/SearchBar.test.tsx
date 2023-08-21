@@ -4,18 +4,7 @@ import { vi } from 'vitest';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import App from '../App';
 import { unityMeal } from './Mocks/Meals';
-import { mockFetchDrinks, mockFetchMeals, renderWithRouterAndMock } from './Mocks/Helpers';
-
-const loginApp = async () => {
-  const inputEmail = screen.getByTestId('email-input');
-  const inputPassword = screen.getByTestId('password-input');
-  const btnSubmit = screen.getByTestId('login-submit-btn');
-  await userEvent.type(inputEmail, 'alguem@gmail.com');
-  await userEvent.type(inputPassword, '1234567');
-  await userEvent.click(btnSubmit);
-  const search = screen.getByTestId('search-top-btn');
-  await userEvent.click(search);
-};
+import { mockFetchDrinks, mockFetchMeals, renderWithRouterAndMock, loginAndSearch } from './Mocks/Helpers';
 
 describe('Testes do componente SearchBar', () => {
   const idSearchInput = 'search-input';
@@ -28,7 +17,7 @@ describe('Testes do componente SearchBar', () => {
         <App />
       </BrowserRouter>,
     );
-    await loginApp();
+    await loginAndSearch();
     screen.getByTestId(idSearchInput);
     screen.getByTestId(idRadioIngredient);
     screen.getByTestId('name-search-radio');
@@ -45,7 +34,7 @@ describe('Testes do componente SearchBar', () => {
         <App />
       </MemoryRouter>,
     );
-    await loginApp();
+    await loginAndSearch();
     const searchInput = screen.getByTestId(idSearchInput);
     const searchButton = screen.getByTestId(idBtnSearch);
     const radioName = screen.getByTestId('name-search-radio');
@@ -58,7 +47,7 @@ describe('Testes do componente SearchBar', () => {
   test('Verifica se um alert e exibido caso a busca seja feita com mais de 1 letra em fist Letter', async () => {
     window.alert = vi.fn();
     renderWithRouterAndMock(<App />, mockFetchMeals);
-    await loginApp();
+    await loginAndSearch();
     const searchInput = screen.getByTestId(idSearchInput);
     const searchButton = screen.getByTestId(idBtnSearch);
     const radioFistletter = screen.getByTestId(idFistLetterRadio);
@@ -70,7 +59,7 @@ describe('Testes do componente SearchBar', () => {
 
   test('Verifica se a busca por somente a primeira letra funciona', async () => {
     renderWithRouterAndMock(<App />, mockFetchMeals);
-    await loginApp();
+    await loginAndSearch();
     const searchInput = screen.getByTestId(idSearchInput);
     const searchButton = screen.getByTestId(idBtnSearch);
     const radioFistletter = screen.getByTestId('first-letter-search-radio');
@@ -82,7 +71,7 @@ describe('Testes do componente SearchBar', () => {
 
   test('Verifica se a busca por ingrediente funciona', async () => {
     renderWithRouterAndMock(<App />, mockFetchMeals);
-    await loginApp();
+    await loginAndSearch();
     const searchInput = screen.getByTestId(idSearchInput);
     const searchButton = screen.getByTestId(idBtnSearch);
     const radioIngredient = screen.getByTestId(idRadioIngredient);
@@ -100,7 +89,7 @@ describe('Testes do componente SearchBar', () => {
         <App />
       </MemoryRouter>,
     );
-    await loginApp();
+    await loginAndSearch();
     const searchInput = screen.getByTestId(idSearchInput);
     const searchButton = screen.getByTestId(idBtnSearch);
     const radioIngredient = screen.getByTestId(idRadioIngredient);

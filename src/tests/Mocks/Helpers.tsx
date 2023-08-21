@@ -29,3 +29,14 @@ export const mockFetchMeals = vi.fn().mockResolvedValue({
 export const mockFetchDrinks = vi.fn().mockResolvedValue({
   json: async () => (mockDrinks),
 });
+
+export const loginAndSearch = async () => {
+  const inputEmail = screen.getByTestId('email-input');
+  const inputPassword = screen.getByTestId('password-input');
+  const btnSubmit = screen.getByTestId('login-submit-btn');
+  await userEvent.type(inputEmail, 'alguem@gmail.com');
+  await userEvent.type(inputPassword, '1234567');
+  await userEvent.click(btnSubmit);
+  const search = screen.getByTestId('search-top-btn');
+  await userEvent.click(search);
+};
