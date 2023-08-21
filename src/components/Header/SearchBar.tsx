@@ -22,6 +22,7 @@ function SearchBar({ pageTitle }: SearchBarProps) {
       return dataAPI;
     } catch (error: any) {
       alert(error.message);
+      return null;
     }
   };
 
@@ -48,6 +49,9 @@ function SearchBar({ pageTitle }: SearchBarProps) {
 
     const URL = `https://www.the${drinksOrRecipes}db.com/api/json/v1/1/${searchOrFilter}=${searchInput}`;
     const data = await fetchRecipes(URL);
+
+    if (data === undefined || data === null) return;
+
     const drinksOrMeals = 'drinks' in data ? data.drinks : data.meals;
     if (drinksOrMeals === null) {
       window.alert('Sorry, we haven\'t found any recipes for these filters.');

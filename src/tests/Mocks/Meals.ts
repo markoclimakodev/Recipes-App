@@ -1,6 +1,4 @@
-import { vi } from 'vitest';
-
-export const meals = {
+export const mockMeals = {
   meals: [
     {
       idMeal: '52977',
@@ -164,10 +162,6 @@ export const meals = {
   ],
 };
 
-export const unitMeal = {
-  meals: [meals.meals[0]],
+export const unityMeal = {
+  meals: [mockMeals.meals[0]],
 };
-
-export const mockFetchMeals = vi.fn().mockResolvedValue({
-  json: async () => (meals),
-});
