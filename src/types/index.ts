@@ -137,3 +137,12 @@ export type MealsResponse = {
 export type DrinksResponse = {
   drinks: Drink[];
 };
+
+export type RecipesProviderProps = {
+  children: React.ReactNode;
+};
+
+export type RecipesContextType = {
+  recipes: Meal[] | Drink[];
+  setRecipes: React.Dispatch<React.SetStateAction<Meal[] | Drink[]>>;
+};

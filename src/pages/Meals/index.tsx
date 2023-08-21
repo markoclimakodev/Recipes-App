@@ -1,6 +1,31 @@
+import { useContext } from 'react';
+import { recipesContext } from '../../context/recipesContext';
+import { Meal } from '../../types';
+
 function Meals() {
+  const { recipes } = useContext(recipesContext);
+  const meals = recipes as Meal[];
+  const renderMeals = meals.length < 12 ? meals : meals.slice(0, 12);
+
   return (
-    <h1>Meals</h1>
+    <>
+      <h1>Meals</h1>
+      <ul>
+        {renderMeals.map((recipe: Meal, index) => {
+          const { idMeal, strMealThumb, strMeal } = recipe;
+          return (
+            <li key={ idMeal } data-testid={ `${index}-recipe-card` }>
+              <img
+                src={ strMealThumb }
+                alt={ strMeal }
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
 

@@ -9,21 +9,24 @@ import Meals from './pages/Meals';
 import Profile from './pages/Profile';
 
 import './App.css';
+import { RecipesProvider } from './context/recipesContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={ <Login /> } />
-        <Route element={ <Layout /> }>
-          <Route path="/meals" element={ <Meals /> } />
-          <Route path="/drinks" element={ <Drinks /> } />
-          <Route path="/profile" element={ <Profile /> } />
-          <Route path="/done-recipes" element={ <DoneRecipes /> } />
-          <Route path="/favorite-recipes" element={ <FavoritesRecipes /> } />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <RecipesProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={ <Login /> } />
+          <Route element={ <Layout /> }>
+            <Route path="/meals" element={ <Meals /> } />
+            <Route path="/drinks" element={ <Drinks /> } />
+            <Route path="/profile" element={ <Profile /> } />
+            <Route path="/done-recipes" element={ <DoneRecipes /> } />
+            <Route path="/favorite-recipes" element={ <FavoritesRecipes /> } />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </RecipesProvider>
   );
 }
 

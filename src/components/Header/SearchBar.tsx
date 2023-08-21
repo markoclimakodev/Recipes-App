@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './header.module.css';
 import { FormSearch, SearchBarProps } from '../../types';
+import { recipesContext } from '../../context/recipesContext';
 
 const initialState: FormSearch = {
   searchInput: '',
@@ -12,6 +13,7 @@ const initialState: FormSearch = {
 function SearchBar({ pageTitle }: SearchBarProps) {
   const [formSearch, setFormSearch] = useState<FormSearch>(initialState);
   const navigate = useNavigate();
+  const { setRecipes } = useContext(recipesContext);
 
   const fetchRecipes = async (searchURL: string) => {
     try {
@@ -41,16 +43,23 @@ function SearchBar({ pageTitle }: SearchBarProps) {
 
     if (searchRadio === 'first_letter' && searchInput.length > 1) {
       window.alert('Your search must have only 1 (one) character');
+      return;
     }
 
     const URL = `https://www.the${drinksOrRecipes}db.com/api/json/v1/1/${searchOrFilter}=${searchInput}`;
     const data = await fetchRecipes(URL);
-    const recipes = 'drinks' in data ? data.drinks : data.meals;
-    if (recipes.length === 1) {
+    const drinksOrMeals = 'drinks' in data ? data.drinks : data.meals;
+    if (drinksOrMeals === null) {
+      window.alert('Sorry, we haven\'t found any recipes for these filters.');
+      return;
+    }
+    if (drinksOrMeals.length === 1) {
       const patchRedirect = 'drinks' in data ? `/drinks/${data.drinks[0].idDrink}`
         : `/meals/${data.meals[0].idMeal}`;
       navigate(patchRedirect);
+      return;
     }
+    setRecipes(drinksOrMeals);
   };
 
   return (
