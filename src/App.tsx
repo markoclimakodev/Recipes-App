@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './component/Layout';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './components/Layout';
 import DoneRecipes from './pages/DoneRecipes';
 import Drinks from './pages/Drinks';
 import FavoritesRecipes from './pages/FavoritesRecipes';
@@ -9,10 +9,11 @@ import Meals from './pages/Meals';
 import Profile from './pages/Profile';
 
 import './App.css';
+import { RecipesProvider } from './context/recipesContext';
 
 function App() {
   return (
-    <BrowserRouter>
+    <RecipesProvider>
       <Routes>
         <Route path="/" element={ <Login /> } />
         <Route element={ <Layout /> }>
@@ -23,7 +24,7 @@ function App() {
           <Route path="/favorite-recipes" element={ <FavoritesRecipes /> } />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </RecipesProvider>
   );
 }
 

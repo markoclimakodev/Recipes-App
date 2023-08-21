@@ -70,7 +70,7 @@ function Header() {
         <h1 data-testid="page-title">{pageTitle}</h1>
       </section>
       {openSearch && (
-        <SearchBar />
+        <SearchBar pageTitle={ pageTitle } />
       )}
 
     </header>
