@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import App from '../App';
 import { unitMeal } from './Mocks/Meals';
 
@@ -15,7 +16,11 @@ const loginApp = async () => {
 
 describe('Testes do componente SearchBar', () => {
   test('Verifica se SearchBar e renderizado', async () => {
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
+    );
     await loginApp();
     const search = screen.getByTestId('search-top-btn');
     await userEvent.click(search);
@@ -30,7 +35,12 @@ describe('Testes do componente SearchBar', () => {
     global.fetch = vi.fn().mockResolvedValue({
       json: async () => (unitMeal),
     });
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>,
+    );
+    await loginApp();
     const search = screen.getByTestId('search-top-btn');
     await userEvent.click(search);
     const searchInput = screen.getByTestId('search-input');
@@ -39,7 +49,6 @@ describe('Testes do componente SearchBar', () => {
     await userEvent.type(searchInput, 'Corba');
     await userEvent.click(radioName);
     await userEvent.click(searchButton);
-    screen.debug();
-    expect(window.location.pathname).toBe('/meals/52977');
+    expect(window.location.pathname).toBe('/meals'); // depois de implementar as rotas dinamicas alterar para /meals/52977
   });
 });

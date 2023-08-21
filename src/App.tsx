@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import DoneRecipes from './pages/DoneRecipes';
 import Drinks from './pages/Drinks';
@@ -14,18 +14,16 @@ import { RecipesProvider } from './context/recipesContext';
 function App() {
   return (
     <RecipesProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={ <Login /> } />
-          <Route element={ <Layout /> }>
-            <Route path="/meals" element={ <Meals /> } />
-            <Route path="/drinks" element={ <Drinks /> } />
-            <Route path="/profile" element={ <Profile /> } />
-            <Route path="/done-recipes" element={ <DoneRecipes /> } />
-            <Route path="/favorite-recipes" element={ <FavoritesRecipes /> } />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={ <Login /> } />
+        <Route element={ <Layout /> }>
+          <Route path="/meals" element={ <Meals /> } />
+          <Route path="/drinks" element={ <Drinks /> } />
+          <Route path="/profile" element={ <Profile /> } />
+          <Route path="/done-recipes" element={ <DoneRecipes /> } />
+          <Route path="/favorite-recipes" element={ <FavoritesRecipes /> } />
+        </Route>
+      </Routes>
     </RecipesProvider>
   );
 }

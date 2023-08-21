@@ -1,16 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter } from 'react-router-dom';
 import App from '../App';
 
 describe('Testes do componente Login', () => {
   test('Verifica se os inputs de email e senha estão na tela', () => {
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
+    );
     screen.getByTestId('email-input');
     screen.getByTestId('password-input');
     screen.getByTestId('login-submit-btn');
   });
   test('Testa se a verificação de email e senha está funcionando', async () => {
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
+    );
     const inputEmail = screen.getByTestId('email-input');
     const inputPassword = screen.getByTestId('password-input');
     const btnSubmit = screen.getByTestId('login-submit-btn');

@@ -165,7 +165,7 @@ export const meals = {
 };
 
 export const unitMeal = {
-  meals: meals.meals[0],
+  meals: [meals.meals[0]],
 };
 
 export const mockFetchMeals = vi.fn().mockResolvedValue({
