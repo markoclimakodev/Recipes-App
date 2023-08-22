@@ -6,6 +6,7 @@ function Recipes({ type }:{ type: string }) {
 
   const [filtersDrinks, setFiltersDrinks] = useState<FiltersReturn[]>([]);
   const [filtersMeals, setFiltersMeals] = useState<FiltersReturn[]>([]);
+  const [currentFilter, setCurrentFilter] = useState<string>();
 
   type FiltersReturn = {
     strCategory: string;
@@ -40,13 +41,37 @@ function Recipes({ type }:{ type: string }) {
     FetchFilters();
   }, []);
 
+  const handleClick = async (category:string) => {
+    setCurrentFilter(category);
+    if (type === 'meals') {
+      if (category === currentFilter) return fetchRecipes();
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+      const data = await response.json();
+      setRecipes(data.meals);
+    } else if (type === 'drinks') {
+      if (category === currentFilter) return fetchRecipes();
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+      const data = await response.json();
+      setRecipes(data.drinks);
+    }
+  };
+
   return (
     <>
       {/* <h1>{type === 'meals' ? 'Meals' : 'Drinks'}</h1> */}
+      <button
+        data-testid="All-category-filter"
+        onClick={ () => fetchRecipes() }
+        type="button"
+      >
+        All
+
+      </button>
       {type === 'meals' ? filtersMeals.slice(0, 5)
         .map((category:FiltersReturn, index) => {
           return (
             <button
+              onClick={ () => handleClick(category.strCategory) }
               type="button"
               key={ index }
               data-testid={ `${category.strCategory}-category-filter` }
@@ -57,6 +82,7 @@ function Recipes({ type }:{ type: string }) {
         }) : filtersDrinks.slice(0, 5).map((category:FiltersReturn, index) => {
         return (
           <button
+            onClick={ () => handleClick(category.strCategory) }
             type="button"
             key={ index }
             data-testid={ `${category.strCategory}-category-filter` }
