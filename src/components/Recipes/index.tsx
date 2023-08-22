@@ -58,7 +58,6 @@ function Recipes({ type }:{ type: string }) {
 
   return (
     <>
-      {/* <h1>{type === 'meals' ? 'Meals' : 'Drinks'}</h1> */}
       <button
         data-testid="All-category-filter"
         onClick={ () => fetchRecipes() }
