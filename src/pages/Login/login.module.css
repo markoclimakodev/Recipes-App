@@ -47,3 +47,19 @@
   align-items: center;
   justify-content: center;
 }
+
+.backgroundLogin {
+  height: 50vh;
+  background-color: var(--purple);
+  display: flex;
+  flex-direction: column;
+}
+
+.tomato {
+  width: 50%;
+}
+
+.logoApp {
+  width: 50%;
+  margin: 0 auto;
+}
