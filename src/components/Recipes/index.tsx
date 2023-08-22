@@ -63,7 +63,6 @@ function Recipes({ type }:{ type: string }) {
           >
             {category.strCategory}
           </button>
-
         );
       })}
     </>
