@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import styles from './login.module.css';
 
 const initialState = {
   email: '',
@@ -25,8 +26,10 @@ function Login() {
   const btnActive = (regexEmail.test(form.email) && form.password.length > 6);
 
   return (
-    <form onSubmit={ handleSubmitLogin }>
+    <form className={ styles.formLogin } onSubmit={ handleSubmitLogin }>
+      <h1 className={ styles.heading }>Login</h1>
       <input
+        className={ styles.inputLogin }
         name="email"
         type="text"
         data-testid="email-input"
@@ -34,6 +37,7 @@ function Login() {
         onChange={ handleChange }
       />
       <input
+        className={ styles.inputLogin }
         name="password"
         type="password"
         data-testid="password-input"
@@ -41,6 +45,7 @@ function Login() {
         onChange={ handleChange }
       />
       <button
+        className={ styles.btnLogin }
         type="submit"
         data-testid="login-submit-btn"
         disabled={ !btnActive }
