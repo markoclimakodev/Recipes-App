@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { recipesContext } from '../../context/recipesContext';
 import { Meal } from '../../types';
+import Recipes from '../../components/Recipes';
 
 function Meals() {
   const { recipes } = useContext(recipesContext);
@@ -10,6 +11,7 @@ function Meals() {
   return (
     <>
       <h1>Meals</h1>
+      <Recipes type="meals" />
       <ul>
         {renderMeals.map((recipe: Meal, index) => {
           const { idMeal, strMealThumb, strMeal } = recipe;
