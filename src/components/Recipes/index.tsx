@@ -1,6 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { recipesContext } from '../../context/recipesContext';
 
+type FiltersReturn = {
+  strCategory: string;
+};
+
+type ApiUrl = {
+  meals: string;
+  drinks: string;
+};
+
 function Recipes({ type }:{ type: string }) {
   const { setRecipes } = useContext(recipesContext);
 
@@ -8,15 +17,11 @@ function Recipes({ type }:{ type: string }) {
   const [filtersMeals, setFiltersMeals] = useState<FiltersReturn[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>();
 
-  type FiltersReturn = {
-    strCategory: string;
-  };
   const FetchFilters = async () => {
     if (type === 'meals') {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
       const data = await response.json();
       setFiltersMeals(data.meals);
-      console.log(data.meals);
     } else if (type === 'drinks') {
       const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
       const data = await response.json();
@@ -41,19 +46,18 @@ function Recipes({ type }:{ type: string }) {
     FetchFilters();
   }, []);
 
+  const apiUrls: ApiUrl = {
+    meals: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
+    drinks: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=',
+  };
+
   const handleClick = async (category:string) => {
     setCurrentFilter(category);
-    if (type === 'meals') {
-      if (category === currentFilter) return fetchRecipes();
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
-      const data = await response.json();
-      setRecipes(data.meals);
-    } else if (type === 'drinks') {
-      if (category === currentFilter) return fetchRecipes();
-      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
-      const data = await response.json();
-      setRecipes(data.drinks);
-    }
+    const apiurl = apiUrls[type as keyof ApiUrl];
+    if (category === currentFilter) return fetchRecipes();
+    const response = await fetch(`${apiurl}${category}`);
+    const data = await response.json();
+    setRecipes(data[type]);
   };
 
   return (
@@ -72,7 +76,7 @@ function Recipes({ type }:{ type: string }) {
             <button
               onClick={ () => handleClick(category.strCategory) }
               type="button"
-              key={ index }
+              key={ Date.now() + index }
               data-testid={ `${category.strCategory}-category-filter` }
             >
               {category.strCategory}
@@ -83,7 +87,7 @@ function Recipes({ type }:{ type: string }) {
           <button
             onClick={ () => handleClick(category.strCategory) }
             type="button"
-            key={ index }
+            key={ Date.now() + index }
             data-testid={ `${category.strCategory}-category-filter` }
           >
             {category.strCategory}

@@ -98,6 +98,22 @@ describe('Testes do componente SearchBar', () => {
     }
   });
 
+  test('verifica se exibe um alerta caso nao encontre resultados', async () => {
+    window.alert = vi.fn();
+    renderWithRouterAndMock(<App />, mockFetchMeals);
+    await loginAndSearch();
+    const searchInput = screen.getByTestId(idSearchInput);
+    const searchButton = screen.getByTestId(idBtnSearch);
+    const radioIngredient = screen.getByTestId(idRadioIngredient);
+    await userEvent.type(searchInput, 'Potatoes');
+    await userEvent.click(radioIngredient);
+    global.fetch = vi.fn().mockResolvedValue({
+      json: async () => ({ meals: null }),
+    });
+    await userEvent.click(searchButton);
+    expect(window.alert).toBeCalled();
+  });
+
   test('Testa se a busca por drinks renderiza corretamente', async () => {
     renderWithRouterAndMock(<App />, mockFetchDrinks, '/drinks');
     const search = screen.getByTestId('search-top-btn');

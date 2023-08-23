@@ -4,7 +4,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { Mock, vi } from 'vitest';
 import { mockMeals } from './Meals';
 import { mockDrinks } from './Drinks';
-import drinks from './FIlterDrinkMock';
+import drinks from './CategoryDrinkMock';
+import meals from './CategoryMealsMock';
 
 export const renderWithRouterAndMock = (
   children: React.ReactNode,
@@ -33,6 +34,14 @@ export const mockFetchDrinks = vi.fn().mockResolvedValue({
 
 export const mockDrinksCategories = vi.fn().mockResolvedValue({
   json: async () => (drinks),
+});
+
+export const mockmealsCategories = vi.fn().mockResolvedValue({
+  json: async () => (meals),
+});
+
+export const mockFilteredCategoryDrinks = vi.fn().mockResolvedValue({
+  json: async () => (mockDrinksCategories),
 });
 
 export const loginAndSearch = async () => {
