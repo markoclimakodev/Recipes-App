@@ -1,19 +1,16 @@
 import { screen } from '@testing-library/dom';
-import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import App from '../App';
-import { mockDrinksCategories, mockmealsCategories, renderWithRouterAndMock } from './Mocks/Helpers';
 import cocktailMock from './Mocks/FIlteredCategoryDrinks';
 import beefMock from './Mocks/FilteredCategoryMeals';
+import { mockDrinksCategories, mockmealsCategories, renderWithRouterAndMock } from './Mocks/Helpers';
 import ordinaryDrinksMock from './Mocks/filteredCategoryOrdinary';
 
 const recipeCard = '0-recipe-card';
 const allCategory = 'All-category-filter';
 
 describe('Recipes', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
   test('testa se a pagina de drinks tem os botoes de categoria', async () => {
     renderWithRouterAndMock(<App />, mockDrinksCategories, '/drinks');
     global.fetch = vi.fn().mockResolvedValue({
