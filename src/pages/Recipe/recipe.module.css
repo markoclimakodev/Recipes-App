@@ -1,24 +1,22 @@
 .recipe_container {
-  position: relative;
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 100%;
 }
 
 .category_container {
-  width: 100%;
+  align-items: center;
   display: flex;
   gap: 0.8rem;
-  padding: 1.5rem 1rem;
   justify-content: center;
+  padding: 1.5rem 1rem;
   position: absolute;
-  align-items: center;
-
+  width: 100%;
 }
 
 .category_name {
   color: var(--yellow);
-  font-family: Epilogue;
   font-size: 0.8rem;
   font-style: normal;
   font-weight: 700;
@@ -26,15 +24,15 @@
 
 
 .recipe_container img {
-  width: 100%;
   height: 10.12rem;
+  width: 100%;
 }
 
 .carousel {
   display: flex;
-  width: 21rem;
   gap: 1rem;
   overflow-x: auto;
+  width: 21rem;
 }
 
 .card {
@@ -42,22 +40,22 @@
 }
 
 .card img {
-  width: 10.18rem;
   height: 8.43rem;
+  width: 10.18rem;
 }
 
 
 .start_recipe_button {
-  position: fixed;
-  bottom: 0;
-  border-radius: 0.3rem;
   background: var(--yellow);
+  border-radius: 0.3rem;
+  bottom: 0;
   color: var(--white);
-  text-align: center;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 700;
   letter-spacing: 0.02rem;
-  text-transform: uppercase;
   padding: 0.94rem 4rem;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
 }
