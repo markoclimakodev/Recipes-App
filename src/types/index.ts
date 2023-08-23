@@ -146,3 +146,8 @@ export type RecipesContextType = {
   recipes: Meal[] | Drink[];
   setRecipes: React.Dispatch<React.SetStateAction<Meal[] | Drink[]>>;
 };
+
+export type ApiUrlType = {
+  meals: string;
+  drinks: string;
+};

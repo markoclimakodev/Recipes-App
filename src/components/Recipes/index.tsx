@@ -1,13 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { recipesContext } from '../../context/recipesContext';
+import { ApiUrlType } from '../../types';
 
 type FiltersReturn = {
   strCategory: string;
-};
-
-type ApiUrl = {
-  meals: string;
-  drinks: string;
 };
 
 function Recipes({ type }:{ type: string }) {
@@ -46,14 +42,14 @@ function Recipes({ type }:{ type: string }) {
     FetchFilters();
   }, []);
 
-  const apiUrls: ApiUrl = {
+  const apiUrls: ApiUrlType = {
     meals: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
     drinks: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=',
   };
 
   const handleClick = async (category:string) => {
     setCurrentFilter(category);
-    const apiurl = apiUrls[type as keyof ApiUrl];
+    const apiurl = apiUrls[type as keyof ApiUrlType];
     if (category === currentFilter) return fetchRecipes();
     const response = await fetch(`${apiurl}${category}`);
     const data = await response.json();
