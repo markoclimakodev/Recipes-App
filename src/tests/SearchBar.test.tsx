@@ -82,19 +82,34 @@ describe('Testes do componente SearchBar', () => {
   });
 
   test('Verifica se um Alert e exibido caso ocorra um erro na API', async () => {
-    global.fetch = vi.fn().mockRejectedValue(new Error('Erro'));
     window.alert = vi.fn();
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>,
-    );
+    renderWithRouterAndMock(<App />, mockFetchMeals);
+    await loginAndSearch();
+    const searchInput = screen.getByTestId(idSearchInput);
+    const searchButton = screen.getByTestId(idBtnSearch);
+    const radioIngredient = screen.getByTestId(idRadioIngredient);
+    try {
+      await userEvent.type(searchInput, 'Potatoes');
+      await userEvent.click(radioIngredient);
+      global.fetch = vi.fn().mockRejectedValue(new Error('Erro'));
+      await userEvent.click(searchButton);
+    } catch (error) {
+      expect(window.alert).toBeCalled();
+    }
+  });
+
+  test('verifica se exibe um alerta caso nao encontre resultados', async () => {
+    window.alert = vi.fn();
+    renderWithRouterAndMock(<App />, mockFetchMeals);
     await loginAndSearch();
     const searchInput = screen.getByTestId(idSearchInput);
     const searchButton = screen.getByTestId(idBtnSearch);
     const radioIngredient = screen.getByTestId(idRadioIngredient);
     await userEvent.type(searchInput, 'Potatoes');
     await userEvent.click(radioIngredient);
+    global.fetch = vi.fn().mockResolvedValue({
+      json: async () => ({ meals: null }),
+    });
     await userEvent.click(searchButton);
     expect(window.alert).toBeCalled();
   });

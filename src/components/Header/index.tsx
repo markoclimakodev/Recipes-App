@@ -11,8 +11,6 @@ function Header() {
   const [openSearch, setOpenSearch] = useState(false);
   const location = useLocation();
 
-  // const ahaha = path[0].toUpperCase() + path.split('').slice(1).join('');
-
   const path = location.pathname.replace('/', '');
 
   const pageInfo: PathNames = {
