@@ -1,38 +1,60 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import {
+  fetchDrinkRecommendations,
+  fetchMealsRecommendations,
+} from '../../api/fetchRecomedations';
 import { getIngredientsAndMesures } from '../../helpers/getIngredientsAndMesures';
 import { Drink, Meal } from '../../types';
 
-function Recipe() {
+import styles from './recipe.module.css';
+
+function RecipeDetails() {
   const [mealRecipe, setMealRecipe] = useState<Meal>({} as Meal);
   const [drinkRecipe, setDrinkRecipe] = useState<Drink>({} as Drink);
+  const [mealsRecomendation, setMealsRecomendations] = useState<Meal[]>([]);
+  const [drinksRecomendation, setDrinksRecomendations] = useState<Drink[]>([]);
 
   const { pathname } = useLocation();
   const { id } = useParams();
   const currentPage = pathname.split('/')[1];
 
+  const apiTarget = currentPage === 'meals' ? 'themealdb' : 'thecocktaildb';
+  const apiUrl = `https://www.${apiTarget}.com/api/json/v1/1/lookup.php?i=${id}`;
+
   const fetchRecipeDetail = useCallback(async () => {
     try {
-      const apiTarget = currentPage === 'meals' ? 'themealdb' : 'thecocktaildb';
-      const apiUrl = `https://www.${apiTarget}.com/api/json/v1/1/lookup.php?i=${id}`;
-
       const response = await fetch(apiUrl);
+
       if (!response.ok) {
         throw new Error('Error');
       }
 
       const recipeData = await response.json();
+
       return currentPage === 'meals'
         ? setMealRecipe(recipeData.meals[0])
         : setDrinkRecipe(recipeData.drinks[0]);
     } catch (error) {
       console.error(error);
     }
-  }, [currentPage, id]);
+  }, [currentPage, apiUrl]);
 
   useEffect(() => {
     fetchRecipeDetail();
-  }, [fetchRecipeDetail]);
+
+    const fetchRecommendations = async () => {
+      const recommendations = currentPage === 'meals'
+        ? await fetchDrinkRecommendations()
+        : await fetchMealsRecommendations();
+      if (currentPage === 'meals') {
+        setDrinksRecomendations(recommendations);
+      } else {
+        setMealsRecomendations(recommendations);
+      }
+    };
+    fetchRecommendations();
+  }, [fetchRecipeDetail, currentPage]);
 
   const ingredients = getIngredientsAndMesures(
     currentPage === 'meals'
@@ -48,17 +70,20 @@ function Recipe() {
     'strMeasure',
   );
 
-  console.log(drinkRecipe);
+  console.log(mealsRecomendation);
   return (
     <>
       { currentPage === 'meals' && mealRecipe && (
-        <section>
-          <p
-            data-testid="recipe-category"
-          >
-            {mealRecipe.strCategory}
+        <section className={ styles.recipe_container }>
+          <section className={ styles.category_container }>
+            <p
+              data-testid="recipe-category"
+              className={ styles.category_name }
+            >
+              {mealRecipe.strCategory}
 
-          </p>
+            </p>
+          </section>
           <img
             src={ mealRecipe.strMealThumb }
             alt={ mealRecipe.strMeal }
@@ -71,7 +96,7 @@ function Recipe() {
             {
             ingredients && mesures && ingredients.map((ingredient, index) => (
               <li
-                key={ ingredient }
+                key={ Date.now() + index }
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
                 {ingredient}
@@ -99,13 +124,40 @@ function Recipe() {
         />
       )
      }
+          <h2>Recommended</h2>
+          <section className={ styles.carousel }>
+            { drinksRecomendation && drinksRecomendation.slice(0, 6)
+              .map((drink:Drink, index) => (
+                <section
+                  key={ drink.idDrink }
+                  data-testid={ `${index}-recommendation-card` }
+                  className={ styles.card }
+                >
+                  <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
+                  <h3
+                    data-testid={ `${index}-recommendation-title` }
+                  >
+                    {drink.strDrink}
 
+                  </h3>
+                </section>
+              ))}
+          </section>
+          <button
+            className={ styles.start_recipe_button }
+            data-testid="start-recipe-btn"
+          >
+            start recipe
+          </button>
         </section>
       )}
       { currentPage === 'drinks' && drinkRecipe && (
-        <section>
+        <section
+          className={ styles.recipe_container }
+        >
           <p
             data-testid="recipe-category"
+            className={ styles.category }
           >
             {drinkRecipe.strAlcoholic}
 
@@ -122,7 +174,7 @@ function Recipe() {
             {
             ingredients && mesures && ingredients.map((ingredient, index) => (
               <li
-                key={ ingredient }
+                key={ Date.now() + index }
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
                 {ingredient}
@@ -139,6 +191,28 @@ function Recipe() {
             {drinkRecipe.strInstructions}
           </p>
 
+          <h2>Recommended</h2>
+          <section className={ styles.carousel }>
+            {mealsRecomendation && mealsRecomendation.slice(0, 6)
+              .map((meal: Meal, index) => (
+                <section
+                  key={ meal.idMeal }
+                  data-testid={ `${index}-recommendation-card` }
+                  className={ styles.card }
+                >
+                  <img src={ meal.strMealThumb } alt={ meal.strMeal } />
+                  <h3 data-testid={ `${index}-recommendation-title` }>
+                    {meal.strMeal}
+                  </h3>
+                </section>
+              ))}
+          </section>
+          <button
+            data-testid="start-recipe-btn"
+            className={ styles.start_recipe_button }
+          >
+            start recipe
+          </button>
         </section>
       )}
     </>
@@ -146,4 +220,4 @@ function Recipe() {
   );
 }
 
-export default Recipe;
+export default RecipeDetails;
