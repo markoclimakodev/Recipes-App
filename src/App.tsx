@@ -27,7 +27,6 @@ function App() {
         </Route>
         <Route path="/meals/:id" element={ <RecipeDetails /> } />
         <Route path="/drinks/:id" element={ <RecipeDetails /> } />
-
       </Routes>
     </RecipesProvider>
   );

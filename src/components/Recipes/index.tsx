@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { recipesContext } from '../../context/recipesContext';
 import { ApiUrlType } from '../../types';
 
@@ -13,7 +13,7 @@ function Recipes({ type }:{ type: string }) {
   const [filtersMeals, setFiltersMeals] = useState<FiltersReturn[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>();
 
-  const FetchFilters = async () => {
+  const fetchFilters = useCallback(async () => {
     if (type === 'meals') {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
       const data = await response.json();
@@ -23,9 +23,9 @@ function Recipes({ type }:{ type: string }) {
       const data = await response.json();
       setFiltersDrinks(data.drinks);
     }
-  };
+  }, [type]);
 
-  const fetchRecipes = async () => {
+  const fetchRecipes = useCallback(async () => {
     if (type === 'meals') {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const data = await response.json();
@@ -35,12 +35,12 @@ function Recipes({ type }:{ type: string }) {
       const data = await response.json();
       setRecipes(data.drinks);
     }
-  };
+  }, [setRecipes, type]);
 
   useEffect(() => {
     fetchRecipes();
-    FetchFilters();
-  }, []);
+    fetchFilters();
+  }, [fetchFilters, fetchRecipes]);
 
   const apiUrls: ApiUrlType = {
     meals: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
