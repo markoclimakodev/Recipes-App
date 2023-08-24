@@ -147,7 +147,8 @@ export type RecipesContextType = {
   recipes: Meal[] | Drink[];
   setRecipes: React.Dispatch<React.SetStateAction<Meal[] | Drink[]>>;
   favoriteRecipes: FavoriteType[]
-  handleUpdateFavoriteRecipes: (newFavoriteRecipe:FavoriteType) => void
+  handleFavoriteRecipes: (newFavoriteRecipe:FavoriteType) => void
+  handleRemoveFavoriteRecipe: (recipeId:string) => void
 };
 
 export type ApiUrlType = {
