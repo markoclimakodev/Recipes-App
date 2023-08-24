@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {
@@ -6,11 +6,12 @@ import {
   fetchMealsRecommendations,
 } from '../../api/fetchRecomedations';
 import { getIngredientsAndMesures } from '../../helpers/getIngredientsAndMesures';
-import { Drink, Meal } from '../../types';
+import { Drink, FavoriteType, Meal } from '../../types';
 
 import DrinkRecipeDetails from '../../components/DrinkRecipeDetails';
 import MealRecipeDetails from '../../components/MealRecipeDetails';
 
+import { RecipesContext } from '../../context/recipesContext';
 import styles from './recipe.module.css';
 
 function RecipeDetails() {
@@ -19,6 +20,7 @@ function RecipeDetails() {
   const [mealsRecomendation, setMealsRecomendations] = useState<Meal[]>([]);
   const [drinksRecomendation, setDrinksRecomendations] = useState<Drink[]>([]);
   const [recipeStatus, setRecipeStatus] = useState(false);
+  const { favoriteRecipes, handleUpdateFavoriteRecipes } = useContext(RecipesContext);
   const { pathname } = useLocation();
   const { id } = useParams();
   const currentPage = pathname.split('/')[1];
@@ -77,6 +79,41 @@ function RecipeDetails() {
     });
   }, [pathname]);
 
+  const handleFavoriteRecipe = () => {
+    let recipeToFavorite:FavoriteType = {} as FavoriteType;
+
+    if (currentPage === 'meals') {
+      recipeToFavorite = {
+        id: id || '',
+        type: 'meal',
+        nationality: mealRecipe.strArea,
+        category: mealRecipe.strCategory,
+        alcoholicOrNot: '',
+        name: mealRecipe.strMeal,
+        image: mealRecipe.strMealThumb,
+      };
+    }
+
+    if (currentPage === 'drinks') {
+      recipeToFavorite = {
+        id: id || '',
+        type: 'drink',
+        nationality: '',
+        category: drinkRecipe.strCategory,
+        alcoholicOrNot: drinkRecipe.strAlcoholic,
+        name: drinkRecipe.strDrink,
+        image: drinkRecipe.strDrinkThumb,
+      };
+    }
+
+    const isRecipeAlreadyFavorited = favoriteRecipes
+      .some((recipe) => recipe.id === recipeToFavorite.id);
+
+    if (!isRecipeAlreadyFavorited) {
+      handleUpdateFavoriteRecipes(recipeToFavorite);
+    }
+  };
+
   useEffect(() => {
     fetchRecipeDetail();
 
@@ -117,6 +154,7 @@ function RecipeDetails() {
           measure={ measure }
           drinksRecomendation={ drinksRecomendation }
           handleCopyToClipBoard={ handleCopyToClipBoard }
+          handleFavorite={ handleFavoriteRecipe }
         />
       )}
       { currentPage === 'drinks' && drinkRecipe && (
@@ -127,6 +165,7 @@ function RecipeDetails() {
           measure={ measure }
           mealsRecomendation={ mealsRecomendation }
           handleCopyToClipBoard={ handleCopyToClipBoard }
+          handleFavorite={ handleFavoriteRecipe }
         />
       )}
       <button

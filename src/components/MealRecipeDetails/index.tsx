@@ -1,5 +1,5 @@
 import { BiFoodMenu } from 'react-icons/bi';
-import favoriteIcon from '../../images/blackHeartIcon.svg';
+import favoriteIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import styles from '../../pages/Recipe/recipe.module.css';
 import { Drink, Meal } from '../../types';
@@ -11,6 +11,7 @@ type MealRecipeProps = {
   measure: string[];
   drinksRecomendation: Drink[];
   handleCopyToClipBoard: () => void
+  handleFavorite: () => void
 };
 
 function MealRecipeDetails({
@@ -19,6 +20,7 @@ function MealRecipeDetails({
   measure,
   drinksRecomendation,
   handleCopyToClipBoard,
+  handleFavorite,
 }:MealRecipeProps) {
   return (
     <>
@@ -49,6 +51,7 @@ function MealRecipeDetails({
               icon={ favoriteIcon }
               alt="fovorite-btn"
               testId="favorite-btn"
+              onClick={ handleFavorite }
             />
 
           </section>

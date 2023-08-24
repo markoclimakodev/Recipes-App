@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { recipesContext } from '../../context/recipesContext';
+import { RecipesContext } from '../../context/recipesContext';
 import { ApiUrlType } from '../../types';
 
 type FiltersReturn = {
@@ -7,7 +7,7 @@ type FiltersReturn = {
 };
 
 function Recipes({ type }:{ type: string }) {
-  const { setRecipes } = useContext(recipesContext);
+  const { setRecipes } = useContext(RecipesContext);
 
   const [filtersDrinks, setFiltersDrinks] = useState<FiltersReturn[]>([]);
   const [filtersMeals, setFiltersMeals] = useState<FiltersReturn[]>([]);
