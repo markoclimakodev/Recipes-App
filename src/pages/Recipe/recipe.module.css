@@ -30,10 +30,10 @@
   display: flex;
   justify-content: space-between;
   left: 0.5rem;
+  padding: 0.1rem 1rem;
   position: absolute;
   top: 0.5rem;
   width: 100%;
-  padding: .1rem 1rem;
 }
 
 .action_container p {
@@ -117,7 +117,7 @@
   padding: 0.94rem 4rem;
   position: fixed;
   text-align: center;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
 }
 
 .start_recipe_button:hover {
