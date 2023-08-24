@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import {
   fetchDrinkRecommendations,
   fetchMealsRecommendations,
@@ -63,6 +64,19 @@ function RecipeDetails() {
     navigate(`/${currentPage}/${id}/in-progress`);
   }, [navigate, currentPage, id]);
 
+  const handleCopyToClipBoard = useCallback(async () => {
+    const recipeDetailsLink = `http://localhost:3000${pathname}`;
+    await navigator.clipboard.writeText(recipeDetailsLink);
+    Swal.fire({
+      position: 'center',
+      title: 'Link copied!',
+      showConfirmButton: false,
+      timer: 1000,
+      width: '200px',
+      heightAuto: false,
+    });
+  }, [pathname]);
+
   useEffect(() => {
     fetchRecipeDetail();
 
@@ -102,6 +116,7 @@ function RecipeDetails() {
           ingredients={ ingredients }
           measure={ measure }
           drinksRecomendation={ drinksRecomendation }
+          handleCopyToClipBoard={ handleCopyToClipBoard }
         />
       )}
       { currentPage === 'drinks' && drinkRecipe && (
@@ -111,6 +126,7 @@ function RecipeDetails() {
           ingredients={ ingredients }
           measure={ measure }
           mealsRecomendation={ mealsRecomendation }
+          handleCopyToClipBoard={ handleCopyToClipBoard }
         />
       )}
       <button

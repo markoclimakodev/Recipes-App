@@ -10,6 +10,7 @@ type MealRecipeProps = {
   ingredients: string[];
   measure: string[];
   drinksRecomendation: Drink[];
+  handleCopyToClipBoard: () => void
 };
 
 function MealRecipeDetails({
@@ -17,6 +18,7 @@ function MealRecipeDetails({
   ingredients,
   measure,
   drinksRecomendation,
+  handleCopyToClipBoard,
 }:MealRecipeProps) {
   return (
     <>
@@ -41,6 +43,7 @@ function MealRecipeDetails({
               icon={ shareIcon }
               alt="share-btn"
               testId="share-btn"
+              onClick={ handleCopyToClipBoard }
             />
             <ActionButtons
               icon={ favoriteIcon }
