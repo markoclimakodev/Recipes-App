@@ -12,6 +12,7 @@ import { RecipesProvider } from './context/recipesContext';
 
 import './App.css';
 import RecipeDetails from './pages/Recipe';
+import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
         </Route>
         <Route path="/meals/:id" element={ <RecipeDetails /> } />
         <Route path="/drinks/:id" element={ <RecipeDetails /> } />
+        <Route path="/meals/:id/in-progress" element={ <RecipeInProgress /> } />
+        <Route path="/drinks/:id/in-progress" element={ <RecipeInProgress /> } />
+
       </Routes>
     </RecipesProvider>
   );
