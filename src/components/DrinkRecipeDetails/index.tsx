@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { BiDrink } from 'react-icons/bi';
-import favoriteIcon from '../../images/whiteHeartIcon.svg';
+import { RecipesContext } from '../../context/recipesContext';
+import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
+import favoriteIcon from '../../images/whiteHeartIcon.svg';
 import styles from '../../pages/Recipe/recipe.module.css';
 import { Drink, Meal } from '../../types';
 import ActionButtons from '../ActionButtons';
@@ -22,6 +25,9 @@ function DrinkRecipeDetails({
   handleCopyToClipBoard,
   handleFavorite,
 }:DrinkRecipeProps) {
+  const { favoriteRecipes } = useContext(RecipesContext);
+  const isFavorite = favoriteRecipes.find((recipe) => recipe.id === drinkRecipe.idDrink);
+
   return (
     <>
       <section className={ styles.recipe_header_container }>
@@ -48,7 +54,7 @@ function DrinkRecipeDetails({
               onClick={ handleCopyToClipBoard }
             />
             <ActionButtons
-              icon={ favoriteIcon }
+              icon={ isFavorite ? favoritedIcon : favoriteIcon }
               alt="fovorite-btn"
               testId="favorite-btn"
               onClick={ handleFavorite }

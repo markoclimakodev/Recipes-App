@@ -21,7 +21,7 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
     }
   }, []);
 
-  const handleUpdateFavoriteRecipes = (newFavoriteRecipe:FavoriteType) => {
+  const handleFavoriteRecipes = (newFavoriteRecipe:FavoriteType) => {
     setFavoriteRecipes([...favoriteRecipes, newFavoriteRecipe]);
     localStorage.setItem(
       'favoriteRecipes',
@@ -29,13 +29,20 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
     );
   };
 
+  const handleRemoveFavoriteRecipe = (recipeId:string) => {
+    const updatedFavoriteRecipes = favoriteRecipes
+      .filter((recipe) => recipe.id !== recipeId);
+    setFavoriteRecipes(updatedFavoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavoriteRecipes));
+  };
+
   const providerValues = {
     recipes,
     setRecipes,
     favoriteRecipes,
-    handleUpdateFavoriteRecipes,
+    handleFavoriteRecipes,
+    handleRemoveFavoriteRecipe,
   };
-
   return (
     <RecipesContext.Provider value={ providerValues }>
       {children}

@@ -20,7 +20,11 @@ function RecipeDetails() {
   const [mealsRecomendation, setMealsRecomendations] = useState<Meal[]>([]);
   const [drinksRecomendation, setDrinksRecomendations] = useState<Drink[]>([]);
   const [recipeStatus, setRecipeStatus] = useState(false);
-  const { favoriteRecipes, handleUpdateFavoriteRecipes } = useContext(RecipesContext);
+  const {
+    favoriteRecipes,
+    handleFavoriteRecipes,
+    handleRemoveFavoriteRecipe,
+  } = useContext(RecipesContext);
   const { pathname } = useLocation();
   const { id } = useParams();
   const currentPage = pathname.split('/')[1];
@@ -108,9 +112,11 @@ function RecipeDetails() {
 
     const isRecipeAlreadyFavorited = favoriteRecipes
       .some((recipe) => recipe.id === recipeToFavorite.id);
-
+    if (isRecipeAlreadyFavorited) {
+      handleRemoveFavoriteRecipe(recipeToFavorite.id);
+    }
     if (!isRecipeAlreadyFavorited) {
-      handleUpdateFavoriteRecipes(recipeToFavorite);
+      handleFavoriteRecipes(recipeToFavorite);
     }
   };
 
@@ -129,7 +135,11 @@ function RecipeDetails() {
     };
     fetchRecommendations();
     checkAndUpdateRecipeStatus();
-  }, [fetchRecipeDetail, currentPage, checkAndUpdateRecipeStatus]);
+  }, [
+    fetchRecipeDetail,
+    currentPage,
+    checkAndUpdateRecipeStatus,
+  ]);
 
   const ingredients = getIngredientsAndMesures(
     currentPage === 'meals'
