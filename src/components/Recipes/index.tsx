@@ -1,23 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
-import { recipesContext } from '../../context/recipesContext';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { RecipesContext } from '../../context/recipesContext';
+import { ApiUrlType } from '../../types';
 
 type FiltersReturn = {
   strCategory: string;
 };
 
-type ApiUrl = {
-  meals: string;
-  drinks: string;
-};
-
 function Recipes({ type }:{ type: string }) {
-  const { setRecipes } = useContext(recipesContext);
+  const { setRecipes } = useContext(RecipesContext);
 
   const [filtersDrinks, setFiltersDrinks] = useState<FiltersReturn[]>([]);
   const [filtersMeals, setFiltersMeals] = useState<FiltersReturn[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>();
 
-  const FetchFilters = async () => {
+  const fetchFilters = useCallback(async () => {
     if (type === 'meals') {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
       const data = await response.json();
@@ -27,9 +23,9 @@ function Recipes({ type }:{ type: string }) {
       const data = await response.json();
       setFiltersDrinks(data.drinks);
     }
-  };
+  }, [type]);
 
-  const fetchRecipes = async () => {
+  const fetchRecipes = useCallback(async () => {
     if (type === 'meals') {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const data = await response.json();
@@ -39,21 +35,21 @@ function Recipes({ type }:{ type: string }) {
       const data = await response.json();
       setRecipes(data.drinks);
     }
-  };
+  }, [setRecipes, type]);
 
   useEffect(() => {
     fetchRecipes();
-    FetchFilters();
-  }, []);
+    fetchFilters();
+  }, [fetchFilters, fetchRecipes]);
 
-  const apiUrls: ApiUrl = {
+  const apiUrls: ApiUrlType = {
     meals: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
     drinks: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=',
   };
 
   const handleClick = async (category:string) => {
     setCurrentFilter(category);
-    const apiurl = apiUrls[type as keyof ApiUrl];
+    const apiurl = apiUrls[type as keyof ApiUrlType];
     if (category === currentFilter) return fetchRecipes();
     const response = await fetch(`${apiurl}${category}`);
     const data = await response.json();

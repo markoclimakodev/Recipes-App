@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { recipesContext } from '../../context/recipesContext';
-import { Drink } from '../../types';
 import Recipes from '../../components/Recipes';
+import { RecipesContext } from '../../context/recipesContext';
+import { Drink } from '../../types';
 
 function Drinks() {
-  const { recipes } = useContext(recipesContext);
+  const { recipes } = useContext(RecipesContext);
   const navigate = useNavigate();
 
   const drinks = recipes as Drink[];

@@ -140,9 +140,28 @@ export type DrinksResponse = {
 
 export type RecipesProviderProps = {
   children: React.ReactNode;
+
 };
 
 export type RecipesContextType = {
   recipes: Meal[] | Drink[];
   setRecipes: React.Dispatch<React.SetStateAction<Meal[] | Drink[]>>;
+  favoriteRecipes: FavoriteType[]
+  handleFavoriteRecipes: (newFavoriteRecipe:FavoriteType) => void
+  handleRemoveFavoriteRecipe: (recipeId:string) => void
+};
+
+export type ApiUrlType = {
+  meals: string;
+  drinks: string;
+};
+
+export type FavoriteType = {
+  id: string,
+  type: string,
+  name: string,
+  image: string,
+  nationality: string,
+  category: string,
+  alcoholicOrNot: string
 };
