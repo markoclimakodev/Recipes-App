@@ -1,6 +1,9 @@
 import { BiDrink } from 'react-icons/bi';
+import ActionButtons from '../ActionButtons';
+import favoriteIcon from '../../images/blackHeartIcon.svg';
+import shareIcon from '../../images/shareIcon.svg';
 import { Drink, Meal } from '../../types';
-import styles from './recipe.module.css';
+import styles from '../../pages/Recipe/recipe.module.css';
 
 type DrinkRecipeProps = {
   drinkRecipe: Drink
@@ -10,9 +13,13 @@ type DrinkRecipeProps = {
 };
 
 function DrinkRecipeDetails({
-  drinkRecipe, ingredients, measure, mealsRecomendation }:DrinkRecipeProps) {
+  drinkRecipe,
+  ingredients,
+  measure,
+  mealsRecomendation,
+}:DrinkRecipeProps) {
   return (
-    <section className={ styles.recipe_container }>
+    <>
       <section className={ styles.recipe_header_container }>
         <img
           src={ drinkRecipe.strDrinkThumb }
@@ -29,6 +36,19 @@ function DrinkRecipeDetails({
             {drinkRecipe.strAlcoholic}
 
           </p>
+          <section className={ styles.actions_button_container }>
+            <ActionButtons
+              icon={ shareIcon }
+              alt="share-btn"
+              testId="share-btn"
+            />
+            <ActionButtons
+              icon={ favoriteIcon }
+              alt="fovorite-btn"
+              testId="favorite-btn"
+            />
+
+          </section>
         </section>
         <h2 data-testid="recipe-title">
           {drinkRecipe.strDrink}
@@ -77,13 +97,7 @@ function DrinkRecipeDetails({
             ))}
         </section>
       </section>
-      <button
-        data-testid="start-recipe-btn"
-        className={ styles.start_recipe_button }
-      >
-        start recipe
-      </button>
-    </section>
+    </>
   );
 }
 

@@ -1,6 +1,9 @@
 import { BiFoodMenu } from 'react-icons/bi';
+import favoriteIcon from '../../images/blackHeartIcon.svg';
+import shareIcon from '../../images/shareIcon.svg';
+import styles from '../../pages/Recipe/recipe.module.css';
 import { Drink, Meal } from '../../types';
-import styles from './recipe.module.css';
+import ActionButtons from '../ActionButtons';
 
 type MealRecipeProps = {
   mealRecipe: Meal
@@ -13,9 +16,10 @@ function MealRecipeDetails({
   mealRecipe,
   ingredients,
   measure,
-  drinksRecomendation }:MealRecipeProps) {
+  drinksRecomendation,
+}:MealRecipeProps) {
   return (
-    <section className={ styles.recipe_container }>
+    <>
       <section className={ styles.recipe_header_container }>
         <img
           src={ mealRecipe.strMealThumb }
@@ -24,13 +28,28 @@ function MealRecipeDetails({
           className={ styles.recipe_img }
         />
         <section className={ styles.action_container }>
-          <BiFoodMenu size={ 32 } color="#FCC436" />
-          <p
-            data-testid="recipe-category"
-          >
-            {mealRecipe.strCategory}
+          <section>
+            <BiFoodMenu size={ 32 } color="#FCC436" />
+            <p
+              data-testid="recipe-category"
+            >
+              {mealRecipe.strCategory}
+            </p>
+          </section>
+          <section className={ styles.actions_button_container }>
+            <ActionButtons
+              icon={ shareIcon }
+              alt="share-btn"
+              testId="share-btn"
+            />
+            <ActionButtons
+              icon={ favoriteIcon }
+              alt="fovorite-btn"
+              testId="favorite-btn"
+            />
 
-          </p>
+          </section>
+
         </section>
         <h2 data-testid="recipe-title">
           {mealRecipe.strMeal}
@@ -100,13 +119,7 @@ function MealRecipeDetails({
         </section>
       </section>
 
-      <button
-        className={ styles.start_recipe_button }
-        data-testid="start-recipe-btn"
-      >
-        start recipe
-      </button>
-    </section>
+    </>
   );
 }
 
