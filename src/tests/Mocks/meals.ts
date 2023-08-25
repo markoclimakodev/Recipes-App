@@ -1,4 +1,4 @@
-export const mockMeals = {
+const meals = {
   meals: [
     {
       idMeal: '52977',
@@ -162,6 +162,4 @@ export const mockMeals = {
   ],
 };
 
-export const unityMeal = {
-  meals: [mockMeals.meals[0]],
-};
+export default meals;

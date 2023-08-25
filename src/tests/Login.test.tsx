@@ -1,32 +1,36 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
+import { screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import App from '../App';
+import renderWithRouter from './Mocks/Helpers';
+import { mockMealsFetch } from './helpers/mockFetch';
 
 describe('Testes do componente Login', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+  beforeEach(async () => {
+    global.fetch = vi.fn().mockImplementation(mockMealsFetch as any);
+    window.alert = vi.fn(() => {});
+  });
+
   test('Verifica se os inputs de email e senha estão na tela', () => {
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
-    );
+    renderWithRouter(<App />);
+
     screen.getByTestId('email-input');
     screen.getByTestId('password-input');
     screen.getByTestId('login-submit-btn');
   });
+
   test('Testa se a verificação de email e senha está funcionando', async () => {
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
-    );
+    const { user } = renderWithRouter(<App />);
+
     const inputEmail = screen.getByTestId('email-input');
     const inputPassword = screen.getByTestId('password-input');
     const btnSubmit = screen.getByTestId('login-submit-btn');
     expect(btnSubmit).toBeDisabled();
-    await userEvent.type(inputEmail, 'alguem@gmail.com');
-    await userEvent.type(inputPassword, '1234567');
-    await userEvent.click(btnSubmit);
+    await user.type(inputEmail, 'alguem@gmail.com');
+    await user.type(inputPassword, '1234567');
+    await user.click(btnSubmit);
     expect(btnSubmit).toBeEnabled();
   });
 });

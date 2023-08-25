@@ -1,4 +1,4 @@
-export const mockDrinks = {
+const drinks = {
   drinks: [
     {
       idDrink: '15997',
@@ -15,9 +15,13 @@ export const mockDrinks = {
       strIBA: null,
       strAlcoholic: 'Optional alcohol',
       strGlass: 'Collins Glass',
-      strInstructions: 'Pour the Galliano liqueur over ice.',
+      strInstructions: `Pour the Galliano liqueur over ice. Fill the remainder 
+      of the glass with ginger ale and thats all there is to it.
+       You now have a your very own GG.`,
       strInstructionsES: null,
-      strInstructionsDE: 'Den Galliano-Likör über Eis gießen. ',
+      strInstructionsDE: `Den Galliano-Likör über Eis gießen. Füllen Sie den 
+      Rest des Glases mit Ginger Ale und das ist alles, was dazu gehört.
+       Du hast jetzt ein eigenes GG.`,
       strInstructionsFR: null,
       'strInstructionsZH-HANS': null,
       'strInstructionsZH-HANT': null,
@@ -69,16 +73,18 @@ export const mockDrinks = {
       strCategory: 'Cocktail',
       strIBA: null,
       strAlcoholic: 'Alcoholic',
-      strGlass: 'Cocktail glass isso e um mock',
-      strInstructions: 'Pour all ingredients into a cocktail shaker,',
+      strGlass: 'Cocktail glass',
+      strInstructions: `Pour all ingredients into a cocktail shaker,
+       mix and serve over ice into a chilled glass.  `,
       strInstructionsES: null,
-      strInstructionsDE: 'Alle Zutaten in einen Cocktailshaker geben, ',
+      strInstructionsDE: `Alle Zutaten in einen Cocktailshaker geben,
+       mischen und über Eis in ein gekühltes Glas servieren.`,
       strInstructionsFR: null,
       'strInstructionsZH-HANS': null,
       'strInstructionsZH-HANT': null,
       strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg',
       strIngredient1: 'Gin',
-      strIngredient2: 'Grand Marnier - isso e um mock',
+      strIngredient2: 'Grand Marnier',
       strIngredient3: 'Lemon Juice',
       strIngredient4: 'Grenadine',
       strIngredient5: null,
@@ -124,7 +130,7 @@ export const mockDrinks = {
       strCategory: 'Shot',
       strIBA: null,
       strAlcoholic: 'Alcoholic',
-      strGlass: 'Shot glass - isso e um mock',
+      strGlass: 'Shot glass',
       strInstructions: 'Layered in a shot glass.',
       strInstructionsES: null,
       strInstructionsDE: 'Schichtaufbau in einem Schnapsglas.',
@@ -180,9 +186,11 @@ export const mockDrinks = {
       strIBA: null,
       strAlcoholic: 'Alcoholic',
       strGlass: 'Wine Glass',
-      strInstructions: 'Add the crème de cassis to the bottom of the glass,',
+      strInstructions: `Add the crème de cassis to the bottom of the glass,
+       then top up with wine.`,
       strInstructionsES: null,
-      strInstructionsDE: 'Gib die Creme de Cassis auf den Boden des',
+      strInstructionsDE: `Gib die Creme de Cassis auf den Boden des Glases und 
+      füge dann Wein hinzu.`,
       strInstructionsFR: null,
       'strInstructionsZH-HANS': null,
       'strInstructionsZH-HANT': null,
@@ -222,7 +230,4 @@ export const mockDrinks = {
     },
   ],
 };
-
-export const unityDrink = {
-  drinks: [mockDrinks.drinks[0]],
-};
+export default drinks;

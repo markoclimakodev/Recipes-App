@@ -1,4 +1,4 @@
-const drinks = {
+const drinkCategories = {
   drinks: [
     {
       strCategory: 'Ordinary Drink',
@@ -36,4 +36,4 @@ const drinks = {
   ],
 };
 
-export default drinks;
+export default drinkCategories;
