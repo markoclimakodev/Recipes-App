@@ -26,7 +26,8 @@ describe('Recipes', () => {
     vi.clearAllMocks();
   });
   beforeEach(async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockDrinksFetch as any);
+    global.fetch = vi.fn().mockImplementation(mockDrinksFetch as any);
+    window.alert = vi.fn(() => {});
   });
 
   test('testa se a pagina de drinks tem os botoes de categoria', async () => {
@@ -76,7 +77,8 @@ describe('Testa os botões de categoria', () => {
     vi.clearAllMocks();
   });
   beforeEach(async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockMealsFetch as any);
+    global.fetch = vi.fn().mockImplementation(mockMealsFetch as any);
+    window.alert = vi.fn(() => {});
   });
 
   test('testa se a pagina  meals tem os botões de categoria', async () => {

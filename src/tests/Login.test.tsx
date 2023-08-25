@@ -9,7 +9,8 @@ describe('Testes do componente Login', () => {
     vi.clearAllMocks();
   });
   beforeEach(async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockMealsFetch as any);
+    global.fetch = vi.fn().mockImplementation(mockMealsFetch as any);
+    window.alert = vi.fn(() => {});
   });
 
   test('Verifica se os inputs de email e senha estão na tela', () => {

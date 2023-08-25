@@ -17,7 +17,8 @@ describe('Testes do componente SearchBar', () => {
     vi.clearAllMocks();
   });
   beforeEach(async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockMealsFetch as any);
+    global.fetch = vi.fn().mockImplementation(mockMealsFetch as any);
+    window.alert = vi.fn(() => {});
   });
 
   test('Verifica se SearchBar e renderizado', async () => {
@@ -128,7 +129,8 @@ describe('', () => {
     vi.clearAllMocks();
   });
   beforeEach(async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockDrinksFetch as any);
+    global.fetch = vi.fn().mockImplementation(mockDrinksFetch as any);
+    window.alert = vi.fn(() => {});
   });
 
   test('Testa se a busca por drinks renderiza corretamente', async () => {

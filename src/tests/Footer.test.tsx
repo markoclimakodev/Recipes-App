@@ -11,6 +11,7 @@ describe('testa o footer e suas funções na pagina /meals', () => {
 
   beforeEach(async () => {
     global.fetch = vi.fn().mockImplementation(mockMealsFetch as any);
+    window.alert = vi.fn(() => {});
   });
 
   test('testa se os icones de bebidas e comidas estão na tela e redirecionam', async () => {
