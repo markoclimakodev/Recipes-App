@@ -1,4 +1,4 @@
-const ordinaryDrinksMock = {
+const milkDrinks = {
   drinks: [
     {
       strDrink: '151 Florida Bushwacker',
@@ -26,7 +26,7 @@ const ordinaryDrinksMock = {
       idDrink: '12656',
     },
     {
-      strDrink: 'Banana Strawberry Shake Daiquiri',
+      strDrink: 'Banana Strawberry Shake Daiquiri-type',
       strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/uvypss1472720581.jpg',
       idDrink: '12658',
     },
@@ -55,6 +55,37 @@ const ordinaryDrinksMock = {
       strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/tyvpxt1468875212.jpg',
       idDrink: '15615',
     },
+    {
+      strDrink: 'Jamaica Kiss',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/urpvvv1441249549.jpg',
+      idDrink: '14095',
+    },
+    {
+      strDrink: 'Just a Moonmint',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/znald61487604035.jpg',
+      idDrink: '12688',
+    },
+    {
+      strDrink: 'Nutty Irishman',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/xspupx1441248014.jpg',
+      idDrink: '13861',
+    },
+    {
+      strDrink: 'Sweet Bananas',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/sxpcj71487603345.jpg',
+      idDrink: '12724',
+    },
+    {
+      strDrink: 'Sweet Tooth',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/j6rq6h1503563821.jpg',
+      idDrink: '16990',
+    },
+    {
+      strDrink: 'Texas Sling',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/ypl13s1504890158.jpg',
+      idDrink: '15639',
+    },
   ],
 };
-export default ordinaryDrinksMock;
+
+export default milkDrinks;
