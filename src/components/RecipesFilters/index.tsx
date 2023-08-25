@@ -6,7 +6,7 @@ type FiltersReturn = {
   strCategory: string;
 };
 
-function Recipes({ type }:{ type: string }) {
+function RecipesFilters({ type }:{ type: string }) {
   const { setRecipes } = useContext(RecipesContext);
 
   const [filtersDrinks, setFiltersDrinks] = useState<FiltersReturn[]>([]);
@@ -14,26 +14,34 @@ function Recipes({ type }:{ type: string }) {
   const [currentFilter, setCurrentFilter] = useState<string>();
 
   const fetchFilters = useCallback(async () => {
-    if (type === 'meals') {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-      const data = await response.json();
-      setFiltersMeals(data.meals);
-    } else if (type === 'drinks') {
-      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-      const data = await response.json();
-      setFiltersDrinks(data.drinks);
+    try {
+      if (type === 'meals') {
+        const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+        const data = await response.json();
+        setFiltersMeals(data.meals);
+      } else if (type === 'drinks') {
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+        const data = await response.json();
+        setFiltersDrinks(data.drinks);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
     }
   }, [type]);
 
   const fetchRecipes = useCallback(async () => {
-    if (type === 'meals') {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-      const data = await response.json();
-      setRecipes(data.meals);
-    } else if (type === 'drinks') {
-      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-      const data = await response.json();
-      setRecipes(data.drinks);
+    try {
+      if (type === 'meals') {
+        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        setRecipes(data.meals);
+      } else if (type === 'drinks') {
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        setRecipes(data.drinks);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
     }
   }, [setRecipes, type]);
 
@@ -47,13 +55,21 @@ function Recipes({ type }:{ type: string }) {
     drinks: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=',
   };
 
-  const handleClick = async (category:string) => {
-    setCurrentFilter(category);
-    const apiurl = apiUrls[type as keyof ApiUrlType];
-    if (category === currentFilter) return fetchRecipes();
-    const response = await fetch(`${apiurl}${category}`);
-    const data = await response.json();
-    setRecipes(data[type]);
+  const handleClick = async (category: string) => {
+    try {
+      setCurrentFilter(category);
+      const apiurl = apiUrls[type as keyof ApiUrlType];
+      if (category === currentFilter) {
+        await fetchRecipes();
+      } else {
+        const response = await fetch(`${apiurl}${category}`);
+        const data = await response.json();
+        setRecipes(data[type]);
+        console.log(data[type]);
+      }
+    } catch (error) {
+      console.error('Ocorreu um erro:', error);
+    }
   };
 
   return (
@@ -94,4 +110,4 @@ function Recipes({ type }:{ type: string }) {
   );
 }
 
-export default Recipes;
+export default RecipesFilters;
