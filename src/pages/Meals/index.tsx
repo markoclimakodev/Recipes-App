@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RecipesFilters from '../../components/RecipesFilters';
+import Recipes from '../../components/Recipes';
 import { RecipesContext } from '../../context/recipesContext';
 import { Meal } from '../../types';
 
@@ -14,7 +14,7 @@ function Meals() {
   return (
     <>
       <h1>Meals</h1>
-      <RecipesFilters type="meals" />
+      <Recipes type="meals" />
       <ul>
         {renderMeals.map((recipe: Meal, index) => {
           const { idMeal, strMealThumb, strMeal } = recipe;
