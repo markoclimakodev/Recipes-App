@@ -1,10 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import {
-  fetchDrinkRecommendations,
-  fetchMealsRecommendations,
-} from '../../api/fetchRecomedations';
 import { getIngredientsAndMesures } from '../../helpers/getIngredientsAndMesures';
 import { Drink, FavoriteType, Meal } from '../../types';
 
@@ -17,8 +13,7 @@ import styles from './recipe.module.css';
 function RecipeDetails() {
   const [mealRecipe, setMealRecipe] = useState<Meal>({} as Meal);
   const [drinkRecipe, setDrinkRecipe] = useState<Drink>({} as Drink);
-  const [mealsRecomendation, setMealsRecomendations] = useState<Meal[]>([]);
-  const [drinksRecomendation, setDrinksRecomendations] = useState<Drink[]>([]);
+  const [recommendations, setRecommendations] = useState<Meal[] | Drink[]>([]);
   const [recipeStatus, setRecipeStatus] = useState(false);
   const {
     favoriteRecipes,
@@ -120,25 +115,40 @@ function RecipeDetails() {
     }
   };
 
+  const fetchRecommendations = useCallback(async (url:string) => {
+    try {
+      const recommendationsResponse = await fetch(url);
+
+      if (!recommendationsResponse.ok) {
+        throw new Error('Error');
+      }
+
+      const recommendationsData = await recommendationsResponse.json();
+      return recommendationsData.drinks || recommendationsData.meals;
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   useEffect(() => {
     fetchRecipeDetail();
 
-    const fetchRecommendations = async () => {
-      const recommendations = currentPage === 'meals'
-        ? await fetchDrinkRecommendations()
-        : await fetchMealsRecommendations();
-      if (currentPage === 'meals') {
-        setDrinksRecomendations(recommendations);
-      } else {
-        setMealsRecomendations(recommendations);
-      }
+    const fetchRecommendationsData = async () => {
+      const url = currentPage === 'meals'
+        ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
+        : 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+
+      const recommendation = await fetchRecommendations(url);
+      setRecommendations(recommendation);
     };
-    fetchRecommendations();
+
+    fetchRecommendationsData();
     checkAndUpdateRecipeStatus();
   }, [
     fetchRecipeDetail,
     currentPage,
     checkAndUpdateRecipeStatus,
+    fetchRecommendations,
   ]);
 
   const ingredients = getIngredientsAndMesures(
@@ -162,7 +172,7 @@ function RecipeDetails() {
           mealRecipe={ mealRecipe }
           ingredients={ ingredients }
           measure={ measure }
-          drinksRecomendation={ drinksRecomendation }
+          drinksRecomendation={ recommendations as Drink[] }
           handleCopyToClipBoard={ handleCopyToClipBoard }
           handleFavorite={ handleFavoriteRecipe }
         />
@@ -173,7 +183,7 @@ function RecipeDetails() {
           drinkRecipe={ drinkRecipe }
           ingredients={ ingredients }
           measure={ measure }
-          mealsRecomendation={ mealsRecomendation }
+          mealsRecomendation={ recommendations as Meal[] }
           handleCopyToClipBoard={ handleCopyToClipBoard }
           handleFavorite={ handleFavoriteRecipe }
         />
