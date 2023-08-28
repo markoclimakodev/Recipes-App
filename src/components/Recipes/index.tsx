@@ -61,13 +61,13 @@ function Recipes({ type }:{ type: string }) {
     try {
       setCurrentFilter(category);
       const apiurl = apiUrls[type as keyof ApiUrlType];
-      if (category === currentFilter) {
+      if (category === currentFilter || category === 'All') {
         await fetchRecipes();
+        setCurrentFilter('All');
       } else {
         const response = await fetch(`${apiurl}${category}`);
         const data = await response.json();
         setRecipes(data[type]);
-        console.log(data[type]);
       }
     } catch (error) {
       console.error('Ocorreu um erro:', error);
@@ -78,7 +78,7 @@ function Recipes({ type }:{ type: string }) {
     <section className={ styles.button_filters_container }>
       <button
         data-testid="All-category-filter"
-        onClick={ () => fetchRecipes() }
+        onClick={ () => handleClick('All') }
         type="button"
         className={ styles.button_filter }
       >
