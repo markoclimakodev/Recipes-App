@@ -1,0 +1,22 @@
+.button_filters_container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-top: 1.5rem;
+  width: 100%;
+}
+
+.button_filter {
+  align-items: center;
+  color: #797D86;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.65rem;
+  font-weight: 300;
+  gap: 1rem;
+  text-align: center;
+}
+
+.button_filter span {
+  width: 3.33rem;
+}
