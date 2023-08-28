@@ -165,3 +165,7 @@ export type FavoriteType = {
   category: string,
   alcoholicOrNot: string
 };
+
+export type FiltersReturn = {
+  strCategory: string;
+};

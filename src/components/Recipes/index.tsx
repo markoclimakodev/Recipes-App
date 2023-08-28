@@ -1,10 +1,12 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { RecipesContext } from '../../context/recipesContext';
-import { ApiUrlType } from '../../types';
+import { ApiUrlType, FiltersReturn } from '../../types';
+import ButtonFilters from '../ButtonFilters';
 
-type FiltersReturn = {
-  strCategory: string;
-};
+import allDrinksIcon from '../../images/AllDrinks.svg';
+import AllMealsIcon from '../../images/AllMealsCategories.svg';
+
+import styles from './recipes.module.css';
 
 function Recipes({ type }:{ type: string }) {
   const { setRecipes } = useContext(RecipesContext);
@@ -73,40 +75,36 @@ function Recipes({ type }:{ type: string }) {
   };
 
   return (
-    <>
+    <section className={ styles.button_filters_container }>
       <button
         data-testid="All-category-filter"
         onClick={ () => fetchRecipes() }
         type="button"
+        className={ styles.button_filter }
       >
+        <img src={ type === 'meals' ? AllMealsIcon : allDrinksIcon } alt="All" />
         All
 
       </button>
       {type === 'meals' ? filtersMeals.slice(0, 5)
-        .map((category:FiltersReturn, index) => {
+        .map((category:FiltersReturn) => {
           return (
-            <button
-              onClick={ () => handleClick(category.strCategory) }
-              type="button"
-              key={ Date.now() + index }
-              data-testid={ `${category.strCategory}-category-filter` }
-            >
-              {category.strCategory}
-            </button>
+            <ButtonFilters
+              key={ category.strCategory }
+              handleClick={ () => handleClick(category.strCategory) }
+              category={ category }
+            />
           );
-        }) : filtersDrinks.slice(0, 5).map((category:FiltersReturn, index) => {
+        }) : filtersDrinks.slice(0, 5).map((category:FiltersReturn) => {
         return (
-          <button
-            onClick={ () => handleClick(category.strCategory) }
-            type="button"
-            key={ Date.now() + index }
-            data-testid={ `${category.strCategory}-category-filter` }
-          >
-            {category.strCategory}
-          </button>
+          <ButtonFilters
+            key={ category.strCategory }
+            handleClick={ () => handleClick(category.strCategory) }
+            category={ category }
+          />
         );
       })}
-    </>
+    </section>
   );
 }
 
