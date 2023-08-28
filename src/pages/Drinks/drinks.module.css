@@ -6,33 +6,28 @@
 }
 
 .recipe_card {
-  list-style: none;
+  background: var(--white);
   border-radius: 0.3rem;
-  background: #FFF;
+  box-shadow: rgba(0, 0, 0, 0.24) 0.1px 3px 8px;
+  list-style: none;
   width: fit-content;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .card_button {
   color: var(--text-color);
-  font-size: 0.75rem;
   display: flex;
   flex-direction: column;
+  font-size: 0.75rem;
   gap: 0.5rem;
 }
 
 .card_button img {
-  width: 10.1875rem;
-  height: 8.4375rem;
-  flex-shrink: 0;
   border-radius: 0.3rem 0.3rem 0.1rem 0.1rem;
+  flex-shrink: 0;
+  height: 8.43rem;
+  width: 10.18rem;
 }
 
 .card_button p {
   padding-left: 1rem;
-}
-
-.recipe_card:hover {
-  transform: scale(1);
-  outline: var(--yellow) 2px solid;
 }
