@@ -4,6 +4,8 @@ import Recipes from '../../components/Recipes';
 import { RecipesContext } from '../../context/recipesContext';
 import { Drink } from '../../types';
 
+import styles from './drinks.module.css';
+
 function Drinks() {
   const { recipes } = useContext(RecipesContext);
   const navigate = useNavigate();
@@ -13,14 +15,25 @@ function Drinks() {
 
   return (
     <>
-      <h1>Drinks</h1>
       <Recipes type="drinks" />
-      <ul>
+      <ul
+        className={ styles.recipe_card_container }
+      >
         {renderDrinks.map((recipe: Drink, index) => {
           const { idDrink, strDrinkThumb, strDrink } = recipe;
           return (
-            <li key={ idDrink } data-testid={ `${index}-recipe-card` }>
-              <button type="button" onClick={ () => navigate(`/drinks/${idDrink}`) }>
+            <li
+              key={ idDrink }
+              data-testid={ `${index}-recipe-card` }
+              className={ styles.recipe_card }
+
+            >
+              <button
+                type="button"
+                onClick={ () => navigate(`/drinks/${idDrink}`) }
+                className={ styles.card_button }
+
+              >
                 <img
                   src={ strDrinkThumb }
                   alt={ strDrink }
