@@ -154,7 +154,7 @@ describe('', () => {
     const gg = await screen.findByRole('img', { name: /gg/i });
     await user.click(gg);
     await waitFor(() => {
-      screen.findByRole('list');
+      screen.getByRole('list');
     });
   });
 });
