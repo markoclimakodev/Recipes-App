@@ -2,8 +2,8 @@ import { screen, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import App from '../App';
-import renderWithRouter from './Mocks/Helpers';
 import { mockDrinksFetch, mockMealsFetch } from './helpers/mockFetch';
+import renderWithRouter from './helpers/renderWithRouter';
 
 const idBtnOpenSearchBar = 'search-top-btn';
 
@@ -53,7 +53,7 @@ describe('Recipes', () => {
 
     await userEvent.click(ordinaryBtn);
     await waitFor(() => {
-      screen.findByText('3-Mile Long Island Iced Tea');
+      screen.getByText('3-Mile Long Island Iced Tea');
     });
   });
 
@@ -67,7 +67,7 @@ describe('Recipes', () => {
 
     await userEvent.click(cocktailBtn);
     await waitFor(() => {
-      screen.findByText('155 Belmont');
+      screen.getByText('155 Belmont');
     });
   });
 });
@@ -103,7 +103,7 @@ describe('Testa os botões de categoria', () => {
 
     await userEvent.click(beefBtn);
     await waitFor(() => {
-      screen.findByText('Beef and Mustard Pie');
+      screen.getByText('Beef and Mustard Pie');
     });
   });
 
@@ -117,7 +117,7 @@ describe('Testa os botões de categoria', () => {
 
     await userEvent.click(breakfastBtn);
     await waitFor(() => {
-      screen.findByText('Home-made Mandazi');
+      screen.getByText('Home-made Mandazi');
     });
   });
 
@@ -144,7 +144,7 @@ describe('Testa os botões de categoria', () => {
 
     await userEvent.click(dessertBtn);
     await waitFor(() => {
-      screen.findByText('Bakewell tart');
+      screen.getByText('Bakewell tart');
     });
   });
 
@@ -158,7 +158,7 @@ describe('Testa os botões de categoria', () => {
 
     await userEvent.click(goatBtn);
     await waitFor(() => {
-      screen.findByText('Mbuzi Choma (Roasted Goat)');
+      screen.getByText('Mbuzi Choma (Roasted Goat)');
     });
   });
 
@@ -171,7 +171,7 @@ describe('Testa os botões de categoria', () => {
     const beefBtn = await screen.findByTestId(beefTestId);
     await userEvent.click(beefBtn);
     await waitFor(() => {
-      screen.findByText('Beef and Mustard Pie');
+      screen.getByText('Beef and Mustard Pie');
     });
     const allBtn = await screen.findByTestId(allCategory);
 

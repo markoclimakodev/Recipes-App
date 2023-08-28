@@ -4,7 +4,7 @@ import { RecipesContext } from '../../context/recipesContext';
 import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
-import styles from '../../pages/Recipe/recipe.module.css';
+import styles from '../../pages/RecipeDetails/recipe.module.css';
 import { Drink, Meal } from '../../types';
 import ActionButtons from '../ActionButtons';
 
@@ -74,7 +74,7 @@ function DrinkRecipeDetails({
           {
             (ingredients && measure) && ingredients.map((ingredient, index) => (
               <li
-                key={ Date.now() + index }
+                key={ drinkRecipe.idDrink }
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
                 {ingredient}

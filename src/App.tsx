@@ -11,7 +11,7 @@ import Profile from './pages/Profile';
 import { RecipesProvider } from './context/recipesContext';
 
 import './App.css';
-import RecipeDetails from './pages/Recipe';
+import RecipeDetails from './pages/RecipeDetails';
 import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {

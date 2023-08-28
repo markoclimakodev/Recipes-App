@@ -6,7 +6,7 @@ type FiltersReturn = {
   strCategory: string;
 };
 
-function RecipesFilters({ type }:{ type: string }) {
+function Recipes({ type }:{ type: string }) {
   const { setRecipes } = useContext(RecipesContext);
 
   const [filtersDrinks, setFiltersDrinks] = useState<FiltersReturn[]>([]);
@@ -110,4 +110,4 @@ function RecipesFilters({ type }:{ type: string }) {
   );
 }
 
-export default RecipesFilters;
+export default Recipes;

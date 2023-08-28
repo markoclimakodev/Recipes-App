@@ -1,4 +1,4 @@
-const meals = {
+const mealsList = {
   meals: [
     {
       idMeal: '52977',
@@ -162,4 +162,4 @@ const meals = {
   ],
 };
 
-export default meals;
+export default mealsList;

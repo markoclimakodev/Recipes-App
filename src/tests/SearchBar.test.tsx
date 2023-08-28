@@ -2,8 +2,8 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import App from '../App';
-import renderWithRouter from './Mocks/Helpers';
 import { mockDrinksFetch, mockMealsFetch } from './helpers/mockFetch';
+import renderWithRouter from './helpers/renderWithRouter';
 
 const idBtnOpenSearchBar = 'search-top-btn';
 const idSearchInput = 'search-input';
@@ -154,7 +154,7 @@ describe('', () => {
     const gg = await screen.findByRole('img', { name: /gg/i });
     await user.click(gg);
     await waitFor(() => {
-      screen.findByRole('list');
+      screen.getByRole('list');
     });
   });
 });

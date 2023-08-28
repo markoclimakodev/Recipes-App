@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import App from '../App';
-import renderWithRouter from './Mocks/Helpers';
 import { mockMealsFetch } from './helpers/mockFetch';
+import renderWithRouter from './helpers/renderWithRouter';
 
 describe('testa o footer e suas funções na pagina /meals', () => {
   afterEach(() => {
