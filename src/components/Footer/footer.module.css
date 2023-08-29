@@ -1,0 +1,22 @@
+.footerContainer {
+  background-color: var(--purple);
+  bottom: 0;
+  display: flex;
+  height: 52px;
+  position: fixed;
+  width: 100%;
+}
+
+.footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+
+.footrButoon {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}

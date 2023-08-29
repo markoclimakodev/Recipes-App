@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './header.module.css';
+import { RecipesContext } from '../../context/recipesContext';
 import { FormSearch, SearchBarProps } from '../../types';
-import { recipesContext } from '../../context/recipesContext';
+import styles from './header.module.css';
 
 const initialState: FormSearch = {
   searchInput: '',
@@ -13,7 +13,7 @@ const initialState: FormSearch = {
 function SearchBar({ pageTitle }: SearchBarProps) {
   const [formSearch, setFormSearch] = useState<FormSearch>(initialState);
   const navigate = useNavigate();
-  const { setRecipes } = useContext(recipesContext);
+  const { setRecipes } = useContext(RecipesContext);
 
   const fetchRecipes = async (searchURL: string) => {
     try {

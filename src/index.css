@@ -3,7 +3,8 @@
   --purple: #41197f;
   --border-color: #b1b1b1;
   --white: #ffffff;
-  --button-hover: #e0ab25
+  --button-hover: #e0ab25;
+  --text-color: #1A1B1C;
 }
 
 * {
@@ -19,4 +20,5 @@
 body {
   width: 100%;
   min-height: 100vh;
+  padding-bottom: 3rem;
 }
