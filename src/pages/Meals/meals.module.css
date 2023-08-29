@@ -10,7 +10,9 @@
   border-radius: 0.3rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0.1px 3px 8px;
   list-style: none;
-  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 10rem;
 }
 
 .card_button {
