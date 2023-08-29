@@ -67,7 +67,7 @@ function MealRecipeDetails({
           {mealRecipe.strMeal}
         </h2>
       </section>
-      <section>
+      <section className={ styles.section_container }>
         <h2>Ingredients</h2>
         <ul className={ styles.ingredient_list }>
           {
@@ -94,7 +94,7 @@ function MealRecipeDetails({
         </p>
       </section>
 
-      <section>
+      <section className={ styles.instructions_container }>
         <h2>Video</h2>
         { mealRecipe.strYoutube && (
           <iframe
@@ -109,7 +109,7 @@ function MealRecipeDetails({
 
       </section>
 
-      <section>
+      <section className={ styles.instructions_container }>
         <h2>Recommended</h2>
         <section className={ styles.carousel }>
           { drinksRecomendation && drinksRecomendation.slice(0, 6)
