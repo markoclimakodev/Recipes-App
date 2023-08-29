@@ -23,7 +23,7 @@ function Login() {
     localStorage.setItem('user', JSON.stringify({ email: form.email }));
     navigate('/meals');
   };
-  // so pelo commit mesmo
+
   const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const btnActive = (regexEmail.test(form.email) && form.password.length > 6);
 
