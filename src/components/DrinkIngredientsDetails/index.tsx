@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import styles from '../../pages/RecipeDetails/recipe.module.css';
 import { Drink } from '../../types';
 
@@ -13,6 +14,11 @@ function DrinkIngredientsDetails({
   ingredients,
   measure,
 }:DrinkRecipeProps) {
+  const { id } = useParams();
+  console.log(id);
+  const { pathname } = useLocation();
+  const currentPage = pathname.split('/')[3];
+  console.log(currentPage);
   const [check, setCheck] = useState<{ [key: number]: boolean }>({});
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,29 +33,43 @@ function DrinkIngredientsDetails({
 
         <ul className={ styles.ingredient_list }>
           {
-            (ingredients && measure) && ingredients.map((ingredient, index) => (
-              <li
-                key={ drinkRecipe.idDrink }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                <label
-                  data-testid={ `${index}-ingredient-step` }
-                  htmlFor="DrinkCheck"
-                  className={ check[index] ? styles.check : '' }
+            currentPage === 'in-progress' ? (
+              (ingredients && measure) && ingredients.map((ingredient, index) => (
+                <li
+                  key={ drinkRecipe.idDrink }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
                 >
-                  <input
-                    type="checkbox"
-                    name={ index.toString() }
-                    id="DrinkCheck"
-                    onChange={ handleChange }
-                    checked={ check[index] || false }
-                  />
+                  <label
+                    data-testid={ `${index}-ingredient-step` }
+                    htmlFor="DrinkCheck"
+                    className={ check[index] ? styles.check : '' }
+                  >
+                    <input
+                      type="checkbox"
+                      name={ index.toString() }
+                      id="DrinkCheck"
+                      onChange={ handleChange }
+                      checked={ check[index] || false }
+                    />
+                    {ingredient}
+                    -
+                    {measure[index]}
+                  </label>
+                </li>
+              ))) : (
+
+              (ingredients && measure) && ingredients.map((ingredient, index) => (
+                <li
+                  key={ drinkRecipe.idDrink }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
                   {ingredient}
                   -
                   {measure[index]}
-                </label>
-              </li>
-            ))
+                </li>
+              ))
+
+            )
           }
         </ul>
       </section>
