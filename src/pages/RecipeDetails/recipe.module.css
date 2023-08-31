@@ -132,6 +132,14 @@
 }
 
 
+.check {
+  text-decoration: line-through solid rgb(0, 0, 0)
+}
+
+/* .check input:checked + .checkbox {
+  text-decoration: line-through solid rgb(0, 0, 0)
+} */
+
 @media ( min-width : 640px ) {
 
   .recipe_container {

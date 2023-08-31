@@ -7,6 +7,7 @@ import favoriteIcon from '../../images/whiteHeartIcon.svg';
 import styles from '../../pages/RecipeDetails/recipe.module.css';
 import { Drink, Meal } from '../../types';
 import ActionButtons from '../ActionButtons';
+import MealIngredientsDetails from '../MealIngredientsDetails';
 
 type MealRecipeProps = {
   mealRecipe: Meal
@@ -67,25 +68,7 @@ function MealRecipeDetails({
           {mealRecipe.strMeal}
         </h2>
       </section>
-      <section className={ styles.section_container }>
-        <h2>Ingredients</h2>
-        <ul className={ styles.ingredient_list }>
-          {
-            ingredients && measure && ingredients.map((ingredient, index) => (
-              <li
-                key={ Date.now() + index }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {ingredient}
-                {' '}
-                -
-                {' '}
-                {measure[index]}
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+      <MealIngredientsDetails ingredients={ ingredients } measure={ measure } />
 
       <section className={ styles.instructions_container }>
         <h2>Instructions</h2>
