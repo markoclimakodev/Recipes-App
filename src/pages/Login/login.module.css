@@ -1,0 +1,100 @@
+.backgroundLogin {
+  align-items: center;
+  background-color: var(--purple);
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.btnLogin {
+  background: var(--yellow);
+  border-radius: 5px;
+  color: white;
+  font-family: Epilogue , sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  height: 40px;
+  letter-spacing: 0.42px;
+  line-height: normal;
+  max-width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.5s ease-in-out;
+}
+
+.btnLogin:disabled {
+  background-color: gray;
+  color: var(--dark-gray);
+}
+
+.btnLogin:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.formLogin {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: center;
+  margin: auto;
+  max-width: 70vw;
+}
+
+.heading {
+  color: var(--purple);
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 3.3px;
+  line-height: normal;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.inputLogin {
+  border: 0.5px solid var(--purple);
+  border-radius: 5px;
+  color: var(--purple);
+  font-family: Epilogue , sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  height: 40px;
+  line-height: normal;
+  max-width: 100%;
+}
+
+.logoApp {
+  height: 50%;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+@media screen and ( min-width : 1200px ) {
+
+  .backgroundLogin {
+    flex-direction: row;
+  }
+
+  .logoApp {
+    margin-right: -30vh;
+  }
+
+  .logoApp, .tomato {
+    height: 80%;
+  }
+
+  .tomato {
+    margin-left: -30vh;
+  }
+}
+
+.tomato {
+  height: 60%;
+  width: 100%;
+}
