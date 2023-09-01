@@ -15,7 +15,6 @@ function RecipeDetails() {
   const [drinkRecipe, setDrinkRecipe] = useState<Drink>({} as Drink);
   const [recommendations, setRecommendations] = useState<Meal[] | Drink[]>([]);
   const [recipeStatus, setRecipeStatus] = useState(false);
-  const [recipesInProgress, setRecipesInProgress] = useState();
   const {
     favoriteRecipes,
     handleFavoriteRecipes,
