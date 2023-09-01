@@ -23,12 +23,6 @@ function MealIngredientsDetails({
     const { checked } = event.target;
     setCheck((prevCheck) => ({ ...prevCheck, [name]: checked }));
   }, []);
-  useEffect(() => {
-    const checks = {
-      check,
-    };
-    localStorage.setItem('check', JSON.stringify(checks));
-  }, [check]);
   return (
     <div>
       <section className={ styles.section_container }>
