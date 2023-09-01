@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from '../../pages/RecipeDetails/recipe.module.css';
 
@@ -23,7 +23,12 @@ function MealIngredientsDetails({
     const { checked } = event.target;
     setCheck((prevCheck) => ({ ...prevCheck, [name]: checked }));
   }, []);
-
+  useEffect(() => {
+    const checks = {
+      check,
+    };
+    localStorage.setItem('check', JSON.stringify(checks));
+  }, [check]);
   return (
     <div>
       <section className={ styles.section_container }>
