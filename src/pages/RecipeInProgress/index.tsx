@@ -60,11 +60,6 @@ function RecipeInProgress() {
     }
   }, [currentPage, id]);
 
-  const handleFinishRecipe = useCallback(() => {
-    setRecipeStatus(true);
-    navigate('/done-recipes');
-  }, [navigate]);
-
   const handleCopyToClipBoard = useCallback(() => {
     const path = pathname.split('/');
     const recipeDetailsLink = `http://localhost:3000/${path[1]}/${path[2]}`;
@@ -166,6 +161,10 @@ function RecipeInProgress() {
       : drinkRecipe,
     'strMeasure',
   ) as string[];
+  const handleFinishRecipe = useCallback(() => {
+    setRecipeStatus(true);
+    navigate('/done-recipes');
+  }, [navigate]);
 
   return (
     <section className={ styles.recipe_container }>
@@ -191,6 +190,7 @@ function RecipeInProgress() {
         />
       )}
       <button
+        type="button"
         data-testid="finish-recipe-btn"
         className={ styles.start_recipe_button }
         onClick={ handleFinishRecipe }

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from '../../pages/RecipeDetails/recipe.module.css';
 import { Drink } from '../../types';
@@ -8,29 +8,71 @@ type DrinkRecipeProps = {
   ingredients: string[]
   measure: string[]
 };
-
+type StringArray = string[];
+type CheckType = {
+  meals: {
+    [key: string]: StringArray;
+  };
+  drinks: {
+    [key: string]: StringArray;
+  };
+};
 function DrinkIngredientsDetails({
   drinkRecipe,
   ingredients,
   measure,
 }:DrinkRecipeProps) {
   const { id } = useParams();
-  console.log(id);
   const { pathname } = useLocation();
   const currentPage = pathname.split('/')[3];
-  console.log(currentPage);
-  const [check, setCheck] = useState<{ [key: number]: boolean }>({});
-
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = event.target;
-    const { checked } = event.target;
-    setCheck((prevCheck) => ({ ...prevCheck, [name]: checked }));
+  const keyType = pathname.split('/')[1];
+  const [ingredientCheck, setIngredientsCheck] = useState<string[]>([]);
+  const [ingredientStored, setIngredientStored] = useState<CheckType>({} as CheckType);
+  const getIngredientFromLocalStorage = () => {
+    const getIngredients = localStorage.getItem('ingredientsChecked');
+    if (getIngredients) {
+      setIngredientStored(JSON.parse(getIngredients));
+    }
+  };
+  const handleSaveIngredient = useCallback(() => {
+    const ingredientToSave = {
+      ...ingredientStored,
+      [keyType]: {
+        ...(ingredientStored[keyType as keyof CheckType] || {}),
+        [id as string]: ingredientCheck,
+      },
+    };
+    localStorage.setItem('ingredientsChecked', JSON.stringify(ingredientToSave));
+  }, [id, ingredientCheck, ingredientStored, keyType]);
+  useEffect(() => {
+    getIngredientFromLocalStorage();
   }, []);
+  useEffect(() => {
+    handleSaveIngredient();
+  }, [ingredientCheck, handleSaveIngredient]);
+  const handleIngredientsCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    if (checked && !ingredientCheck.includes(name)) {
+      setIngredientsCheck((prevCheck) => [...prevCheck, name]);
+    } else if (!checked) {
+      setIngredientsCheck((prevCheck) => prevCheck
+        .filter((ingredient) => ingredient !== name));
+    }
+  };
+  useEffect(() => {
+    if (
+      ingredientStored[keyType as keyof CheckType]
+      && ingredientStored[keyType as keyof CheckType][id as string]
+    ) {
+      setIngredientsCheck(ingredientStored[keyType as keyof CheckType][id as string]);
+    } else {
+      setIngredientsCheck([]);
+    }
+  }, [ingredientStored, id, keyType]);
   return (
     <div>
       <section>
         <h2>Ingredients</h2>
-
         <ul className={ styles.ingredient_list }>
           {
             currentPage === 'in-progress' ? (
@@ -40,24 +82,25 @@ function DrinkIngredientsDetails({
                   data-testid={ `${index}-ingredient-name-and-measure` }
                 >
                   <label
+                    htmlFor="MealCheck"
                     data-testid={ `${index}-ingredient-step` }
-                    htmlFor="DrinkCheck"
-                    className={ check[index] ? styles.check : '' }
+                    className={ ingredientCheck.includes(ingredient) ? styles.check : '' }
                   >
                     <input
                       type="checkbox"
-                      name={ index.toString() }
-                      id="DrinkCheck"
-                      onChange={ handleChange }
-                      checked={ check[index] || false }
+                      id="MealCheck"
+                      name={ ingredient }
+                      onChange={ handleIngredientsCheck }
+                      checked={ ingredientCheck.includes(ingredient) }
                     />
                     {ingredient}
+                    {' '}
                     -
+                    {' '}
                     {measure[index]}
                   </label>
                 </li>
               ))) : (
-
               (ingredients && measure) && ingredients.map((ingredient, index) => (
                 <li
                   key={ drinkRecipe.idDrink }
@@ -68,7 +111,6 @@ function DrinkIngredientsDetails({
                   {measure[index]}
                 </li>
               ))
-
             )
           }
         </ul>
@@ -76,5 +118,4 @@ function DrinkIngredientsDetails({
     </div>
   );
 }
-
 export default DrinkIngredientsDetails;
