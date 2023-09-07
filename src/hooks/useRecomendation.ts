@@ -11,16 +11,14 @@ export const useRecomendation = (
     const drinskUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const fetchData = async () => {
       const response = await fetch(type === 'meals' ? drinskUrl : mealsUrl);
-      if (!response.ok) {
-        throw new Error('Failed to fetch');
-      }
+
       const data = await response.json();
 
-      if (type === 'meals') {
+      if (type === 'meals' && data && data.drinks) {
         setMealRecomendation(data.drinks);
         setDrinkRecomendation([]);
       }
-      if (type === 'drinks') {
+      if (type === 'drinks' && data && data.meals) {
         setDrinkRecomendation(data.meals);
         setMealRecomendation([]);
       }

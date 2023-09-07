@@ -14,8 +14,10 @@ export const useRecipeDetails = (
     const fetchData = async () => {
       const response = await fetch(type === 'meals' ? mealUrl : drinksUrl);
       const data = await response.json();
-      const recipeDetails = type === 'meals' ? data.meals[0] : data.drinks[0];
-      setRecipe(recipeDetails);
+      if (data) {
+        const recipeDetails = type === 'meals' ? data.meals[0] : data.drinks[0];
+        setRecipe(recipeDetails);
+      }
     };
     fetchData();
   }, [id, type]);
