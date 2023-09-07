@@ -2,7 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  padding-top: 1rem;
+  justify-content: center;
+  margin: auto;
+  padding: 4rem 0.5rem;
+  width: 100%;
 }
 
 .recipe_card {
@@ -11,8 +14,13 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0.1px 3px 8px;
   list-style: none;
   overflow: hidden;
+  transition: all 350ms ease-in-out;
   white-space: nowrap;
-  width: 10rem;
+  width: 10.188rem;
+}
+
+.recipe_card:hover {
+  transform: scale(1.05);
 }
 
 .card_button {

@@ -21,7 +21,7 @@ function Meals() {
           const { idMeal, strMealThumb, strMeal } = recipe;
           return (
             <li
-              key={ idMeal }
+              key={ strMeal }
               data-testid={ `${index}-recipe-card` }
               className={ styles.recipe_card }
             >
