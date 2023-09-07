@@ -23,16 +23,14 @@ function Drinks() {
           const { idDrink, strDrinkThumb, strDrink } = recipe;
           return (
             <li
-              key={ idDrink }
+              key={ strDrink }
               data-testid={ `${index}-recipe-card` }
               className={ styles.recipe_card }
-
             >
               <button
                 type="button"
                 onClick={ () => navigate(`/drinks/${idDrink}`) }
                 className={ styles.card_button }
-
               >
                 <img
                   src={ strDrinkThumb }
