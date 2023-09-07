@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { getIngredientsAndMesures } from '../../helpers/getIngredientsAndMesures';
-import { Drink, FavoriteType, Meal } from '../../types';
+import { DoneRecipesType, Drink, FavoriteType, Meal } from '../../types';
 
 import DrinkRecipeDetails from '../../components/DrinkRecipeDetails';
 import MealRecipeDetails from '../../components/MealRecipeDetails';
@@ -19,6 +19,8 @@ function RecipeInProgress() {
     favoriteRecipes,
     handleFavoriteRecipes,
     handleRemoveFavoriteRecipe,
+    doneRecipes,
+    handleDoneRecipes,
   } = useContext(RecipesContext);
   const { pathname } = useLocation();
   const { id } = useParams();
@@ -112,6 +114,39 @@ function RecipeInProgress() {
     }
   };
 
+  const handleDoneRecipe = useCallback(() => {
+    let recipeDone:DoneRecipesType = {} as DoneRecipesType;
+
+    if (currentPage === 'meals') {
+      recipeDone = {
+        id: id || '',
+        nationality: mealRecipe.strArea,
+        name: mealRecipe.strMeal,
+        category: mealRecipe.strCategory,
+        doneDate: new Date().toISOString(),
+        type: 'meal',
+        alcoholicOrNot: '',
+        image: mealRecipe.strMealThumb,
+        tags: mealRecipe.strTags ? mealRecipe.strTags.split(',') : [],
+      };
+    }
+
+    if (currentPage === 'drinks') {
+      recipeDone = {
+        id: id || '',
+        type: 'drink',
+        nationality: '',
+        doneDate: new Date().toISOString(),
+        category: drinkRecipe.strCategory,
+        alcoholicOrNot: drinkRecipe.strAlcoholic,
+        name: drinkRecipe.strDrink,
+        image: drinkRecipe.strDrinkThumb,
+        tags: drinkRecipe.strTags ? drinkRecipe.strTags.split(',') : [],
+      };
+    }
+
+    handleDoneRecipes(recipeDone);
+  }, [currentPage, drinkRecipe, handleDoneRecipes, id, mealRecipe]);
   const fetchRecommendations = useCallback(async (url:string) => {
     try {
       const recommendationsResponse = await fetch(url);
@@ -162,9 +197,10 @@ function RecipeInProgress() {
     'strMeasure',
   ) as string[];
   const handleFinishRecipe = useCallback(() => {
+    handleDoneRecipe();
     setRecipeStatus(true);
     navigate('/done-recipes');
-  }, [navigate]);
+  }, [handleDoneRecipe, navigate]);
 
   return (
     <section className={ styles.recipe_container }>

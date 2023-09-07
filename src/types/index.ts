@@ -149,6 +149,8 @@ export type RecipesContextType = {
   favoriteRecipes: FavoriteType[]
   handleFavoriteRecipes: (newFavoriteRecipe:FavoriteType) => void
   handleRemoveFavoriteRecipe: (recipeId:string) => void
+  doneRecipes: DoneRecipesType[]
+  handleDoneRecipes: (newDoneRecipe:DoneRecipesType) => void
 };
 
 export type ApiUrlType = {
@@ -168,4 +170,16 @@ export type FavoriteType = {
 
 export type FiltersReturn = {
   strCategory: string;
+};
+
+export type DoneRecipesType = {
+  id: string,
+  type: string,
+  nationality: string,
+  category: string,
+  alcoholicOrNot: string,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string[]
 };
