@@ -42,7 +42,7 @@ describe('RecipeInProgress', () => {
     expect(alert).toBeInTheDocument();
   });
   test('Testando botão de favoritos', async () => {
-    renderWithRouter(<App />, { route: '/meals/52772/in-progress' });
+    renderWithRouter(<App />, { route: '/drinks/15997/in-progress' });
     const mockStorage = vi.spyOn(Storage.prototype, 'setItem');
     const favoriteBtn = await screen.findByTestId('favorite-btn') as HTMLImageElement;
     expect(favoriteBtn).toBeInTheDocument();

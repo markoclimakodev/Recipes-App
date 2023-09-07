@@ -19,7 +19,6 @@ function RecipeInProgress() {
     favoriteRecipes,
     handleFavoriteRecipes,
     handleRemoveFavoriteRecipe,
-    doneRecipes,
     handleDoneRecipes,
   } = useContext(RecipesContext);
   const { pathname } = useLocation();
