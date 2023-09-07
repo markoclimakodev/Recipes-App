@@ -60,11 +60,6 @@ function RecipeDetails() {
     }
   }, [currentPage, id]);
 
-  const handleStartRecipe = useCallback(() => {
-    setRecipeStatus(true);
-    navigate(`/${currentPage}/${id}/in-progress`);
-  }, [navigate, currentPage, id]);
-
   const handleCopyToClipBoard = useCallback(async () => {
     const recipeDetailsLink = `http://localhost:3000${pathname}`;
     await navigator.clipboard.writeText(recipeDetailsLink);
@@ -164,6 +159,22 @@ function RecipeDetails() {
       : drinkRecipe,
     'strMeasure',
   ) as string[];
+
+  const handleStartRecipe = useCallback(() => {
+    setRecipeStatus(true);
+    const progressRecipesLocalStorage = localStorage.getItem('inProgressRecipes');
+    const inProgressRecipe = progressRecipesLocalStorage
+      ? JSON.parse(progressRecipesLocalStorage)
+      : { drinks: {}, meals: {} };
+    const recipeKey = currentPage === 'meals' ? 'meals' : 'drinks';
+    const recipeId = id ? id.toString() : '';
+    inProgressRecipe[recipeKey] = {
+      ...inProgressRecipe[recipeKey],
+      [recipeId]: ingredients,
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipe));
+    navigate(`/${currentPage}/${id}/in-progress`);
+  }, [currentPage, id, ingredients, navigate]);
 
   return (
     <section className={ styles.recipe_container }>
