@@ -142,7 +142,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
       };
 
       localStorage.setItem('ingredientChecks', JSON.stringify(updatedChecks));
-
       return updatedChecks;
     });
   };
@@ -198,7 +197,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
         <h2 data-testid="recipe-title">
           {title}
         </h2>
-
       </section>
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>

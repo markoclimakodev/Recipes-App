@@ -134,13 +134,11 @@ function MealInProgress({ type }:MealDetailsType) {
         tags: meal?.strTags ? meal?.strTags.split(',') : [],
       };
     }
-
     const recipeDoneCheck = doneRecipes
       .some((alreadyDecipe) => alreadyDecipe.id === recipeDone.id);
     if (!recipeDoneCheck) {
       handleDoneRecipes(recipeDone);
     }
-
     navigate('/done-recipes');
   };
 
