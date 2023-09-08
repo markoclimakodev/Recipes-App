@@ -58,16 +58,13 @@ function DrinkDetails({ type }:MealDetailsType) {
   ) as string[];
 
   const handleCopyToClipboard = () => {
+    setCopyLink(true);
     const recipeDetailsLink = `http://localhost:3000${pathname}`;
     navigator.clipboard.writeText(recipeDetailsLink);
-    setCopyLink(true);
-  };
-
-  useEffect(() => {
-    setInterval(() => {
+    setTimeout(() => {
       setCopyLink(false);
-    }, 1500);
-  }, [copyLink]);
+    }, 1000);
+  };
 
   const handleFavoriteRecipe = () => {
     let recipeToFavorite:FavoriteType = {} as FavoriteType;
@@ -131,12 +128,6 @@ function DrinkDetails({ type }:MealDetailsType) {
     setIsFavorite(isRecipeAlreadyFavorited);
     checkAndUpdateRecipeStatus();
   }, [checkAndUpdateRecipeStatus, drink?.idDrink, favoriteRecipes]);
-
-  useEffect(() => {
-    setInterval(() => {
-      setCopyLink(false);
-    }, 1500);
-  }, [copyLink]);
 
   return (
     <section className={ styles.recipe_container }>

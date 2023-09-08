@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import shareIcon from '../../images/shareIcon.svg';
 import ActionButtons from '../ActionButtons';
@@ -26,16 +26,13 @@ function CardDoneRecipes(props: CardDoneRecipesProps) {
   const navigate = useNavigate();
 
   const handleCopyToClipboard = () => {
+    setCopyLink(true);
     const recipeDetailsLink = `http://localhost:3000/${type}s/${id}`;
     navigator.clipboard.writeText(recipeDetailsLink);
-    setCopyLink(true);
-  };
-
-  useEffect(() => {
-    setInterval(() => {
+    setTimeout(() => {
       setCopyLink(false);
-    }, 1500);
-  }, [copyLink]);
+    }, 1000);
+  };
 
   return (
     <>
@@ -52,6 +49,7 @@ function CardDoneRecipes(props: CardDoneRecipesProps) {
               src={ image }
               alt={ name }
             />
+            {copyLink && <CopyAlert />}
           </button>
           <section className={ styles.card_info_container }>
             <section className={ styles.card_header }>
@@ -76,7 +74,6 @@ function CardDoneRecipes(props: CardDoneRecipesProps) {
                 onClick={ handleCopyToClipboard }
               />
             </section>
-            {copyLink && <CopyAlert />}
             <p data-testid={ `${index}-horizontal-done-date` }>
               Done in:
               {' '}
@@ -94,7 +91,6 @@ function CardDoneRecipes(props: CardDoneRecipesProps) {
             </section>
 
           </section>
-
         </section>
       )}
       { type === 'drink' && (
@@ -110,6 +106,8 @@ function CardDoneRecipes(props: CardDoneRecipesProps) {
               src={ image }
               alt={ name }
             />
+            {copyLink && <CopyAlert />}
+
           </button>
           <section className={ styles.card_info_container }>
             <section className={ styles.card_header }>
@@ -138,7 +136,6 @@ function CardDoneRecipes(props: CardDoneRecipesProps) {
                 onClick={ handleCopyToClipboard }
               />
             </section>
-            {copyLink && <CopyAlert />}
             <p data-testid={ `${index}-horizontal-done-date` }>
               Done in:
               {' '}

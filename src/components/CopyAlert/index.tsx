@@ -1,8 +1,9 @@
+import styles from './alert.module.css';
+
 function CopyAlert() {
   return (
-    <section>
-      <span>Link copied!</span>
-      <button type="button">X</button>
+    <section className={ styles.alert_container }>
+      <span className={ styles.alert_message }>Link copied!</span>
     </section>
   );
 }

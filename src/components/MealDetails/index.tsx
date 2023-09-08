@@ -64,9 +64,12 @@ function MealDetails({ type }:MealDetailsType) {
   ) as string[];
 
   const handleCopyToClipboard = () => {
+    setCopyLink(true);
     const recipeDetailsLink = `http://localhost:3000${pathname}`;
     navigator.clipboard.writeText(recipeDetailsLink);
-    setCopyLink(true);
+    setTimeout(() => {
+      setCopyLink(false);
+    }, 1000);
   };
 
   const handleFavoriteRecipe = () => {
@@ -130,12 +133,6 @@ function MealDetails({ type }:MealDetailsType) {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
     navigate(`/${type}/${id}/in-progress`);
   };
-
-  useEffect(() => {
-    setInterval(() => {
-      setCopyLink(false);
-    }, 1500);
-  }, [copyLink]);
 
   return (
     <section className={ styles.recipe_container }>

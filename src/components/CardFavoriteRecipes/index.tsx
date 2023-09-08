@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RecipesContext } from '../../context/recipesContext';
 import shareIcon from '../../images/shareIcon.svg';
@@ -35,16 +35,13 @@ function CardFavoriteRecipes(props: CardFavoriteRecipesProps) {
     }
   };
   const handleCopyToClipboard = () => {
+    setCopyLink(true);
     const recipeDetailsLink = `http://localhost:3000/${type}s/${id}`;
     navigator.clipboard.writeText(recipeDetailsLink);
-    setCopyLink(true);
-  };
-
-  useEffect(() => {
-    setInterval(() => {
+    setTimeout(() => {
       setCopyLink(false);
-    }, 1500);
-  }, [copyLink]);
+    }, 1000);
+  };
 
   return (
     <>
@@ -62,6 +59,8 @@ function CardFavoriteRecipes(props: CardFavoriteRecipesProps) {
               alt={ name }
             />
           </button>
+          {copyLink && <CopyAlert />}
+
           <section
             className={ styles.card_info_container }
           >
@@ -97,8 +96,6 @@ function CardFavoriteRecipes(props: CardFavoriteRecipesProps) {
                 onClick={ handleFavoriteRecipe }
               />
             </section>
-            {copyLink && <CopyAlert />}
-
           </section>
 
         </section>
@@ -119,6 +116,7 @@ function CardFavoriteRecipes(props: CardFavoriteRecipesProps) {
               alt={ name }
             />
           </button>
+          {copyLink && <CopyAlert />}
           <section
             className={ styles.card_info_container }
           >
@@ -154,8 +152,6 @@ function CardFavoriteRecipes(props: CardFavoriteRecipesProps) {
                 onClick={ handleFavoriteRecipe }
               />
             </section>
-            {copyLink && <CopyAlert />}
-
           </section>
 
         </section>
