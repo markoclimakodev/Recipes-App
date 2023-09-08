@@ -147,10 +147,12 @@ export type RecipesContextType = {
   recipes: Meal[] | Drink[];
   setRecipes: React.Dispatch<React.SetStateAction<Meal[] | Drink[]>>;
   favoriteRecipes: FavoriteType[]
+  doneRecipes: DoneRecipesType[]
+  loading: boolean
+  handleDoneRecipes: (newDoneRecipe:DoneRecipesType) => void
   handleFavoriteRecipes: (newFavoriteRecipe:FavoriteType) => void
   handleRemoveFavoriteRecipe: (recipeId:string) => void
-  doneRecipes: DoneRecipesType[]
-  handleDoneRecipes: (newDoneRecipe:DoneRecipesType) => void
+  handleLoading: () => void
 };
 
 export type ApiUrlType = {

@@ -6,17 +6,15 @@ import { RecipesContext } from '../../context/recipesContext';
 import { getIngredientsAndMesures } from '../../helpers/getIngredientsAndMesures';
 import { useRecipeDetails } from '../../hooks/useRecipeDetails';
 import { useRecomendation } from '../../hooks/useRecomendation';
-import { DoneRecipesType, FavoriteType, Meal } from '../../types';
 import ActionButtons from '../ActionButtons';
 import CopyAlert from '../CopyAlert';
-
+import MealRecomentation from '../MealRecomendation';
+import MealCheckList from './mealCheckList';
+import { DoneRecipesType, FavoriteType, Meal } from '../../types';
 import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
-
 import styles from '../../pages/RecipeDetails/recipe.module.css';
-import MealRecomentation from '../MealRecomendation';
-import MealCheckList from './mealCheckList';
 
 type MealDetailsType = {
   type: string
@@ -44,7 +42,10 @@ function MealInProgress({ type }:MealDetailsType) {
   const [meal, setMeal] = useState<Meal>();
   const { mealRecomendation } = useRecomendation(type);
   const [copyLink, setCopyLink] = useState(false);
-  const { favoriteRecipes, handleFavoriteRecipes, handleRemoveFavoriteRecipe,
+  const { favoriteRecipes,
+    handleFavoriteRecipes,
+    handleRemoveFavoriteRecipe,
+    handleDoneRecipes,
   } = useContext(RecipesContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [recipeStatus, setRecipeStatus] = useState(false);
@@ -120,23 +121,22 @@ function MealInProgress({ type }:MealDetailsType) {
   }, [checkAndUpdateRecipeStatus, favoriteRecipes, id, meal?.idMeal, type]);
 
   const handleDoneRecipe = () => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
     let recipeDone:DoneRecipesType = {} as DoneRecipesType;
 
     if (type === 'meals' && meal) {
       recipeDone = {
         id: id || '',
-        nationality: meal?.strArea,
-        name: meal?.strMeal,
-        category: meal?.strCategory,
+        nationality: meal.strArea,
+        name: meal.strMeal,
+        category: meal.strCategory,
         doneDate: new Date().toISOString(),
         type: 'meal',
         alcoholicOrNot: '',
-        image: meal?.strMealThumb,
+        image: meal.strMealThumb,
         tags: meal?.strTags ? meal?.strTags.split(',') : [],
       };
     }
-    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, recipeDone]));
+    handleDoneRecipes(recipeDone);
     navigate('/done-recipes');
   };
 

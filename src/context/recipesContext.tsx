@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
 import {
+  DoneRecipesType,
   Drink,
   FavoriteType,
-  DoneRecipesType,
   Meal,
   RecipesContextType,
   RecipesProviderProps,
@@ -14,6 +14,7 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
   const [recipes, setRecipes] = useState<Meal[] | Drink[]>([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState<FavoriteType[]>([]);
   const [doneRecipes, setDoneRecipes] = useState<DoneRecipesType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedDoneRecipes = localStorage.getItem('doneRecipes');
@@ -36,6 +37,13 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
     );
   };
 
+  const handleLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 800);
+  };
+
   const handleFavoriteRecipes = (newFavoriteRecipe:FavoriteType) => {
     setFavoriteRecipes([...favoriteRecipes, newFavoriteRecipe]);
     localStorage.setItem(
@@ -55,10 +63,12 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
     recipes,
     setRecipes,
     favoriteRecipes,
+    doneRecipes,
+    loading,
     handleFavoriteRecipes,
     handleRemoveFavoriteRecipe,
-    doneRecipes,
     handleDoneRecipes,
+    handleLoading,
   };
   return (
     <RecipesContext.Provider value={ providerValues }>
