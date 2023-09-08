@@ -6,17 +6,15 @@ import { RecipesContext } from '../../context/recipesContext';
 import { getIngredientsAndMesures } from '../../helpers/getIngredientsAndMesures';
 import { useRecipeDetails } from '../../hooks/useRecipeDetails';
 import { useRecomendation } from '../../hooks/useRecomendation';
-import { DoneRecipesType, FavoriteType, Meal } from '../../types';
 import ActionButtons from '../ActionButtons';
 import CopyAlert from '../CopyAlert';
-
+import MealRecomentation from '../MealRecomendation';
+import MealCheckList from './mealCheckList';
+import { DoneRecipesType, FavoriteType, Meal } from '../../types';
 import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
-
 import styles from '../../pages/RecipeDetails/recipe.module.css';
-import MealRecomentation from '../MealRecomendation';
-import MealCheckList from './mealCheckList';
 
 type MealDetailsType = {
   type: string
