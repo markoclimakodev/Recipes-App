@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 
 import DrinkInProgress from '../../components/DrinkInProgress';
 import MealInProgress from '../../components/MealInProgress';
-import styles from '../RecipeDetails/recipe.module.css';
+import styles from './inprogress.module.css';
 
 function RecipeInProgress() {
   const { pathname } = useLocation();

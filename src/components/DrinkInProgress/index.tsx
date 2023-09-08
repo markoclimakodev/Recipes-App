@@ -13,7 +13,7 @@ import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
 
-import styles from '../../pages/RecipeDetails/recipe.module.css';
+import styles from '../../pages/RecipeInProgress/inprogress.module.css';
 import DrinkRecomendation from '../DrinkRecomendation';
 
 type MealDetailsType = {
@@ -53,12 +53,10 @@ function DrinkInProgress({ type }:MealDetailsType) {
   const image = drink?.strDrinkThumb;
   const category = drink?.strAlcoholic;
   const instructions = drink?.strInstructions;
-
   const ingredients = getIngredientsAndMesures(
     recipe as Drink,
     'strIngredient',
   ) as string[];
-
   const measure = getIngredientsAndMesures(
     recipe as Drink,
     'strMeasure',
@@ -162,7 +160,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
 
   return (
     <section className={ styles.recipe_container }>
-      {copyLink && <CopyAlert />}
       <section className={ styles.recipe_header_container }>
         <img
           src={ image }
@@ -197,6 +194,7 @@ function DrinkInProgress({ type }:MealDetailsType) {
         <h2 data-testid="recipe-title">
           {title}
         </h2>
+        {copyLink && <CopyAlert />}
       </section>
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>
@@ -208,21 +206,23 @@ function DrinkInProgress({ type }:MealDetailsType) {
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
                 <label
-                  htmlFor="MealCheck"
+                  htmlFor={ ingredient }
                   data-testid={ `${index}-ingredient-step` }
                   className={ checks[id as string]?.[index]
                     ? styles.check : styles.uncheck }
                 >
                   <input
                     type="checkbox"
-                    id="MealCheck"
+                    id={ ingredient }
                     name={ ingredient }
                     className={ styles.checkbox }
                     onChange={ () => handleCheckBox(id as string, index) }
                     checked={ checks[id as string]?.[index] || false }
                   />
                   {ingredient}
+                  {' '}
                   -
+                  {' '}
                   {measure[index]}
                 </label>
               </li>

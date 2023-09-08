@@ -9,12 +9,12 @@ import { useRecomendation } from '../../hooks/useRecomendation';
 import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
-import styles from '../../pages/RecipeDetails/recipe.module.css';
 import { DoneRecipesType, FavoriteType, Meal } from '../../types';
 import ActionButtons from '../ActionButtons';
 import CopyAlert from '../CopyAlert';
 import MealRecomentation from '../MealRecomendation';
 import MealCheckList from './mealCheckList';
+import styles from '../../pages/RecipeInProgress/inprogress.module.css';
 
 type MealDetailsType = {
   type: string
@@ -194,8 +194,9 @@ function MealInProgress({ type }:MealDetailsType) {
         <h2 data-testid="recipe-title">
           {title}
         </h2>
+        {copyLink && <CopyAlert />}
+
       </section>
-      {copyLink && <CopyAlert />}
       <MealCheckList
         ingredients={ ingredients }
         measures={ measure }
