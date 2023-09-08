@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import styles from '../../pages/RecipeDetails/recipe.module.css';
+import styles from '../../pages/RecipeInProgress/inprogress.module.css';
 
 type Checks = { [recipeId: string]:
 { [index: number]: boolean }
@@ -31,14 +31,14 @@ function MealCheckList({
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
                 <label
-                  htmlFor="MealCheck"
+                  htmlFor={ ingredient + index }
                   data-testid={ `${index}-ingredient-step` }
                   className={ checks[id as string]?.[index]
                     ? styles.check : styles.uncheck }
                 >
                   <input
                     type="checkbox"
-                    id={ ingredient }
+                    id={ ingredient + index }
                     name={ ingredient }
                     className={ styles.checkbox }
                     onChange={ () => handleCheckBox(id as string, index) }

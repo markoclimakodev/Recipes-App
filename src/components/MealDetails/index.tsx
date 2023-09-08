@@ -170,11 +170,11 @@ function MealDetails({ type }:MealDetailsType) {
         <h2 data-testid="recipe-title">
           {title}
         </h2>
+        {copyLink && <CopyAlert />}
       </section>
-      {copyLink && <CopyAlert />}
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>
-        <ul className={ ` ${styles.checkbox_list} ${styles.ingredient_list}` }>
+        <ul className={ styles.ingredient_list }>
           { ingredients && measure
             && ingredients.map((ingredient, index) => (
               <li

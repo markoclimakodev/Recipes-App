@@ -166,8 +166,8 @@ function DrinkDetails({ type }:MealDetailsType) {
           {title}
         </h2>
 
+        {copyLink && <CopyAlert />}
       </section>
-      {copyLink && <CopyAlert />}
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>
         <ul className={ ` ${styles.checkbox_list} ${styles.ingredient_list}` }>
