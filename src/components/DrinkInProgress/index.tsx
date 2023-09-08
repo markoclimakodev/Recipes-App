@@ -35,6 +35,7 @@ function DrinkInProgress({ type }:MealDetailsType) {
 
   const [copyLink, setCopyLink] = useState(false);
   const { favoriteRecipes,
+    doneRecipes,
     handleFavoriteRecipes,
     handleRemoveFavoriteRecipe,
     handleDoneRecipes,
@@ -64,9 +65,12 @@ function DrinkInProgress({ type }:MealDetailsType) {
   ) as string[];
 
   const handleCopyToClipboard = () => {
+    setCopyLink(true);
     const recipeDetailsLink = `http://localhost:3000/${type}/${id}`;
     navigator.clipboard.writeText(recipeDetailsLink);
-    setCopyLink(true);
+    setTimeout(() => {
+      setCopyLink(false);
+    }, 1000);
   };
 
   const handleFavoriteRecipe = () => {
@@ -118,7 +122,12 @@ function DrinkInProgress({ type }:MealDetailsType) {
       };
     }
 
-    handleDoneRecipes(recipeDone);
+    const recipeDoneCheck = doneRecipes
+      .some((alreadyDecipe) => alreadyDecipe.id === recipeDone.id);
+    if (!recipeDoneCheck) {
+      handleDoneRecipes(recipeDone);
+    }
+
     navigate('/done-recipes');
   };
 
@@ -152,14 +161,9 @@ function DrinkInProgress({ type }:MealDetailsType) {
     setChecks(storedChecks);
   }, []);
 
-  useEffect(() => {
-    setInterval(() => {
-      setCopyLink(false);
-    }, 1500);
-  }, [copyLink]);
-
   return (
     <section className={ styles.recipe_container }>
+      {copyLink && <CopyAlert />}
       <section className={ styles.recipe_header_container }>
         <img
           src={ image }
@@ -196,7 +200,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
         </h2>
 
       </section>
-      {copyLink && <CopyAlert />}
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>
         <ul className={ ` ${styles.checkbox_list} ${styles.ingredient_list}` }>

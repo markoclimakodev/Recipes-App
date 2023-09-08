@@ -43,6 +43,7 @@ function MealInProgress({ type }:MealDetailsType) {
   const { mealRecomendation } = useRecomendation(type);
   const [copyLink, setCopyLink] = useState(false);
   const { favoriteRecipes,
+    doneRecipes,
     handleFavoriteRecipes,
     handleRemoveFavoriteRecipe,
     handleDoneRecipes,
@@ -68,9 +69,12 @@ function MealInProgress({ type }:MealDetailsType) {
   const measure = getIngredientsAndMesures(recipe, 'strMeasure') as string[];
 
   const handleCopyToClipboard = () => {
+    setCopyLink(true);
     const recipeDetailsLink = `http://localhost:3000/${type}/${id}`;
     navigator.clipboard.writeText(recipeDetailsLink);
-    setCopyLink(true);
+    setTimeout(() => {
+      setCopyLink(false);
+    }, 1000);
   };
 
   const handleFavoriteRecipe = () => {
@@ -130,7 +134,13 @@ function MealInProgress({ type }:MealDetailsType) {
         tags: meal?.strTags ? meal?.strTags.split(',') : [],
       };
     }
-    handleDoneRecipes(recipeDone);
+
+    const recipeDoneCheck = doneRecipes
+      .some((alreadyDecipe) => alreadyDecipe.id === recipeDone.id);
+    if (!recipeDoneCheck) {
+      handleDoneRecipes(recipeDone);
+    }
+
     navigate('/done-recipes');
   };
 
@@ -162,12 +172,6 @@ function MealInProgress({ type }:MealDetailsType) {
     );
     setChecks(storedChecks);
   }, []);
-
-  useEffect(() => {
-    setInterval(() => {
-      setCopyLink(false);
-    }, 1500);
-  }, [copyLink]);
 
   return (
     <section className={ styles.recipe_container }>
