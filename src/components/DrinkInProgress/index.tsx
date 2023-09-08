@@ -13,7 +13,6 @@ import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
 
-import { formatDate } from '../../helpers/formatDate';
 import styles from '../../pages/RecipeDetails/recipe.module.css';
 import DrinkRecomendation from '../DrinkRecomendation';
 
