@@ -1,0 +1,13 @@
+.alert_container {
+  background-color: var(--alert-bg);
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.alert_message {
+  color: var(--text-color);
+  font-size: 1rem;
+}

@@ -2,6 +2,7 @@
   border: 0.518px solid var(--border-color);
   border-radius: 0.312rem;
   display: flex;
+  position: relative;
   width: 20rem;
 }
 

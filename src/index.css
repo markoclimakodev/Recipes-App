@@ -1,6 +1,7 @@
 :root {
   --yellow: #fcc436;
   --purple: #41197f;
+  --alert-bg: rgba(252, 196, 54, 0.9);
   --border-color: #b1b1b1;
   --white: #ffffff;
   --button-hover: #e0ab25;
