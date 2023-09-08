@@ -63,9 +63,11 @@ function DrinkDetails({ type }:MealDetailsType) {
     setCopyLink(true);
   };
 
-  const handleCloseMessage = () => {
-    setCopyLink(false);
-  };
+  useEffect(() => {
+    setInterval(() => {
+      setCopyLink(false);
+    }, 1500);
+  }, [copyLink]);
 
   const handleFavoriteRecipe = () => {
     let recipeToFavorite:FavoriteType = {} as FavoriteType;
@@ -130,6 +132,12 @@ function DrinkDetails({ type }:MealDetailsType) {
     checkAndUpdateRecipeStatus();
   }, [checkAndUpdateRecipeStatus, drink?.idDrink, favoriteRecipes]);
 
+  useEffect(() => {
+    setInterval(() => {
+      setCopyLink(false);
+    }, 1500);
+  }, [copyLink]);
+
   return (
     <section className={ styles.recipe_container }>
       <section className={ styles.recipe_header_container }>
@@ -168,7 +176,7 @@ function DrinkDetails({ type }:MealDetailsType) {
         </h2>
 
       </section>
-      {copyLink && <CopyAlert handleClose={ handleCloseMessage } />}
+      {copyLink && <CopyAlert />}
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>
         <ul className={ ` ${styles.checkbox_list} ${styles.ingredient_list}` }>

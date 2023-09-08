@@ -13,6 +13,7 @@ import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
 
+import { formatDate } from '../../helpers/formatDate';
 import styles from '../../pages/RecipeDetails/recipe.module.css';
 import DrinkRecomendation from '../DrinkRecomendation';
 
@@ -67,10 +68,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
     const recipeDetailsLink = `http://localhost:3000/${type}/${id}`;
     navigator.clipboard.writeText(recipeDetailsLink);
     setCopyLink(true);
-  };
-
-  const handleCloseMessage = () => {
-    setCopyLink(false);
   };
 
   const handleFavoriteRecipe = () => {
@@ -156,6 +153,12 @@ function DrinkInProgress({ type }:MealDetailsType) {
     setChecks(storedChecks);
   }, []);
 
+  useEffect(() => {
+    setInterval(() => {
+      setCopyLink(false);
+    }, 1500);
+  }, [copyLink]);
+
   return (
     <section className={ styles.recipe_container }>
       <section className={ styles.recipe_header_container }>
@@ -194,7 +197,7 @@ function DrinkInProgress({ type }:MealDetailsType) {
         </h2>
 
       </section>
-      {copyLink && <CopyAlert handleClose={ handleCloseMessage } />}
+      {copyLink && <CopyAlert />}
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>
         <ul className={ ` ${styles.checkbox_list} ${styles.ingredient_list}` }>
@@ -224,7 +227,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
                 </label>
               </li>
             ))}
-
         </ul>
       </section>
       <section className={ styles.instructions_container }>
@@ -243,8 +245,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
         Finish Recipe
       </button>
     </section>
-
   );
 }
-
 export default DrinkInProgress;

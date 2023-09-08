@@ -69,10 +69,6 @@ function MealDetails({ type }:MealDetailsType) {
     setCopyLink(true);
   };
 
-  const handleCloseMessage = () => {
-    setCopyLink(false);
-  };
-
   const handleFavoriteRecipe = () => {
     let recipeToFavorite:FavoriteType = {} as FavoriteType;
 
@@ -135,6 +131,12 @@ function MealDetails({ type }:MealDetailsType) {
     navigate(`/${type}/${id}/in-progress`);
   };
 
+  useEffect(() => {
+    setInterval(() => {
+      setCopyLink(false);
+    }, 1500);
+  }, [copyLink]);
+
   return (
     <section className={ styles.recipe_container }>
       <section className={ styles.recipe_header_container }>
@@ -172,7 +174,7 @@ function MealDetails({ type }:MealDetailsType) {
           {title}
         </h2>
       </section>
-      {copyLink && <CopyAlert handleClose={ handleCloseMessage } />}
+      {copyLink && <CopyAlert />}
       <section className={ styles.section_container }>
         <h2>Ingredients</h2>
         <ul className={ ` ${styles.checkbox_list} ${styles.ingredient_list}` }>

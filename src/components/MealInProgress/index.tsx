@@ -6,15 +6,15 @@ import { RecipesContext } from '../../context/recipesContext';
 import { getIngredientsAndMesures } from '../../helpers/getIngredientsAndMesures';
 import { useRecipeDetails } from '../../hooks/useRecipeDetails';
 import { useRecomendation } from '../../hooks/useRecomendation';
-import ActionButtons from '../ActionButtons';
-import CopyAlert from '../CopyAlert';
-import MealRecomentation from '../MealRecomendation';
-import MealCheckList from './mealCheckList';
-import { DoneRecipesType, FavoriteType, Meal } from '../../types';
 import favoritedIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/whiteHeartIcon.svg';
 import styles from '../../pages/RecipeDetails/recipe.module.css';
+import { DoneRecipesType, FavoriteType, Meal } from '../../types';
+import ActionButtons from '../ActionButtons';
+import CopyAlert from '../CopyAlert';
+import MealRecomentation from '../MealRecomendation';
+import MealCheckList from './mealCheckList';
 
 type MealDetailsType = {
   type: string
@@ -50,7 +50,6 @@ function MealInProgress({ type }:MealDetailsType) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [recipeStatus, setRecipeStatus] = useState(false);
   const [checks, setChecks] = useState<Checks>({} as Checks);
-
   const opts: YouTubeProps['opts'] = {
     height: '390',
     width: '100%',
@@ -72,10 +71,6 @@ function MealInProgress({ type }:MealDetailsType) {
     const recipeDetailsLink = `http://localhost:3000/${type}/${id}`;
     navigator.clipboard.writeText(recipeDetailsLink);
     setCopyLink(true);
-  };
-
-  const handleCloseMessage = () => {
-    setCopyLink(false);
   };
 
   const handleFavoriteRecipe = () => {
@@ -122,7 +117,6 @@ function MealInProgress({ type }:MealDetailsType) {
 
   const handleDoneRecipe = () => {
     let recipeDone:DoneRecipesType = {} as DoneRecipesType;
-
     if (type === 'meals' && meal) {
       recipeDone = {
         id: id || '',
@@ -150,7 +144,6 @@ function MealInProgress({ type }:MealDetailsType) {
         },
       };
       localStorage.setItem('ingredientChecks', JSON.stringify(updatedChecks));
-
       return updatedChecks;
     });
   };
@@ -169,6 +162,12 @@ function MealInProgress({ type }:MealDetailsType) {
     );
     setChecks(storedChecks);
   }, []);
+
+  useEffect(() => {
+    setInterval(() => {
+      setCopyLink(false);
+    }, 1500);
+  }, [copyLink]);
 
   return (
     <section className={ styles.recipe_container }>
@@ -207,7 +206,7 @@ function MealInProgress({ type }:MealDetailsType) {
           {title}
         </h2>
       </section>
-      {copyLink && <CopyAlert handleClose={ handleCloseMessage } />}
+      {copyLink && <CopyAlert />}
       <MealCheckList
         ingredients={ ingredients }
         measures={ measure }

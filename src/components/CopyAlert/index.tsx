@@ -1,12 +1,8 @@
-type CopyAlertProps = {
-  handleClose: () => void
-};
-
-function CopyAlert({ handleClose }:CopyAlertProps) {
+function CopyAlert() {
   return (
     <section>
       <span>Link copied!</span>
-      <button type="button" onClick={ handleClose }>X</button>
+      <button type="button">X</button>
     </section>
   );
 }
