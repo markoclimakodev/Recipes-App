@@ -1,0 +1,38 @@
+.profileContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.emailContainer {
+  color: var(--text-color);
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.btnsDiv {
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  padding: 1.25rem;
+  width: 100%;
+
+}
+
+.buttonsContainer button {
+  align-items: center;
+  border-radius: 0.5rem;
+  color: rgba(121, 125, 134, 1);
+  display: flex;
+  width: auto;
+}
+
+.buttonsContainer button img {
+  margin-right: 1rem;
+  width: 2.3rem;
+}
