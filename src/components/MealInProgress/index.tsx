@@ -242,7 +242,7 @@ function MealInProgress({ type }:MealDetailsType) {
         onClick={ handleDoneRecipe }
         disabled={ !areAllIngredientsChecked() }
       >
-        {recipeStatus ? 'Continue Recipe' : 'Start Recipe'}
+        Finish Recipe
       </button>
     </section>
   );
