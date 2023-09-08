@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BiFoodMenu } from 'react-icons/bi';
 import { useNavigate, useParams } from 'react-router-dom';
 import YouTube, { YouTubeProps } from 'react-youtube';
@@ -49,7 +49,6 @@ function MealInProgress({ type }:MealDetailsType) {
     handleDoneRecipes,
   } = useContext(RecipesContext);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [recipeStatus, setRecipeStatus] = useState(false);
   const [checks, setChecks] = useState<Checks>({} as Checks);
   const opts: YouTubeProps['opts'] = {
     height: '390',
@@ -101,23 +100,11 @@ function MealInProgress({ type }:MealDetailsType) {
     }
   };
 
-  const checkAndUpdateRecipeStatus = useCallback(() => {
-    const inProgressRecipesJSON = localStorage.getItem('inProgressRecipes');
-    if (inProgressRecipesJSON) {
-      const inProgressRecipes = JSON.parse(inProgressRecipesJSON);
-      if (inProgressRecipes[type]
-        && inProgressRecipes[type][id as string]) {
-        setRecipeStatus(true);
-      }
-    }
-  }, [id, type]);
-
   useEffect(() => {
     const isRecipeAlreadyFavorited = favoriteRecipes
       .some((recipes) => recipes.id === meal?.idMeal);
     setIsFavorite(isRecipeAlreadyFavorited);
-    checkAndUpdateRecipeStatus();
-  }, [checkAndUpdateRecipeStatus, favoriteRecipes, id, meal?.idMeal, type]);
+  }, [favoriteRecipes, id, meal?.idMeal, type]);
 
   const handleDoneRecipe = () => {
     let recipeDone:DoneRecipesType = {} as DoneRecipesType;
