@@ -44,7 +44,10 @@ function MealInProgress({ type }:MealDetailsType) {
   const [meal, setMeal] = useState<Meal>();
   const { mealRecomendation } = useRecomendation(type);
   const [copyLink, setCopyLink] = useState(false);
-  const { favoriteRecipes, handleFavoriteRecipes, handleRemoveFavoriteRecipe,
+  const { favoriteRecipes,
+    handleFavoriteRecipes,
+    handleRemoveFavoriteRecipe,
+    handleDoneRecipes,
   } = useContext(RecipesContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [recipeStatus, setRecipeStatus] = useState(false);
@@ -120,23 +123,22 @@ function MealInProgress({ type }:MealDetailsType) {
   }, [checkAndUpdateRecipeStatus, favoriteRecipes, id, meal?.idMeal, type]);
 
   const handleDoneRecipe = () => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
     let recipeDone:DoneRecipesType = {} as DoneRecipesType;
 
     if (type === 'meals' && meal) {
       recipeDone = {
         id: id || '',
-        nationality: meal?.strArea,
-        name: meal?.strMeal,
-        category: meal?.strCategory,
+        nationality: meal.strArea,
+        name: meal.strMeal,
+        category: meal.strCategory,
         doneDate: new Date().toISOString(),
         type: 'meal',
         alcoholicOrNot: '',
-        image: meal?.strMealThumb,
+        image: meal.strMealThumb,
         tags: meal?.strTags ? meal?.strTags.split(',') : [],
       };
     }
-    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, recipeDone]));
+    handleDoneRecipes(recipeDone);
     navigate('/done-recipes');
   };
 

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import CardDoneRecipes from '../../components/CardDoneRecipes';
+import { RecipesContext } from '../../context/recipesContext';
 
 type FoodItem = {
   id: string;
@@ -14,8 +15,7 @@ type FoodItem = {
 };
 
 function DoneRecipes() {
-  const getDoneRecipes = localStorage.getItem('doneRecipes');
-  const doneRecipes = getDoneRecipes && JSON.parse(getDoneRecipes);
+  const { doneRecipes } = useContext(RecipesContext);
   const [filter, setFilter] = useState('all');
 
   const onClickFilter = (event: React.MouseEvent<HTMLButtonElement>) => {

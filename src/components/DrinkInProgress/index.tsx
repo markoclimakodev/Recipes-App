@@ -34,7 +34,10 @@ function DrinkInProgress({ type }:MealDetailsType) {
   const { drinkRecomendation } = useRecomendation(type);
 
   const [copyLink, setCopyLink] = useState(false);
-  const { favoriteRecipes, handleFavoriteRecipes, handleRemoveFavoriteRecipe,
+  const { favoriteRecipes,
+    handleFavoriteRecipes,
+    handleRemoveFavoriteRecipe,
+    handleDoneRecipes,
   } = useContext(RecipesContext);
   const [isFavorite, setIsFavorite] = useState(false);
   const [checks, setChecks] = useState<Checks>({} as Checks);
@@ -103,7 +106,6 @@ function DrinkInProgress({ type }:MealDetailsType) {
   }, [drink?.idDrink, favoriteRecipes]);
 
   const handleDoneRecipe = () => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
     let recipeDone:DoneRecipesType = {} as DoneRecipesType;
 
     if (type === 'drinks' && drink) {
@@ -120,7 +122,7 @@ function DrinkInProgress({ type }:MealDetailsType) {
       };
     }
 
-    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, recipeDone]));
+    handleDoneRecipes(recipeDone);
     navigate('/done-recipes');
   };
 
