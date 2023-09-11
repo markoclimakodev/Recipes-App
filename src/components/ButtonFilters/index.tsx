@@ -1,6 +1,17 @@
 import { FiltersReturn } from '../../types';
 import styles from '../Recipes/recipes.module.css';
 
+import OrdinaryDrinkImage from '../../images/OrdinaryDrink.svg';
+import BeefImage from '../../images/beefCategory.svg';
+import BreakfastImage from '../../images/breakfastCategory.svg';
+import ChickenImage from '../../images/chickenCategory.svg';
+import CocktailImage from '../../images/cocktail.svg';
+import CocoaImage from '../../images/cocoa.svg';
+import DessertImage from '../../images/dessertCategory.svg';
+import GoatImage from '../../images/goatCategory.svg';
+import OtherUnknownImage from '../../images/other.svg';
+import ShakeImage from '../../images/shake.svg';
+
 type ButtonFiltersProps = {
   category: FiltersReturn
   handleClick: (category: string) => void
@@ -26,16 +37,16 @@ type IconKey =
 
 function ButtonFilters({ category, handleClick, selected }:ButtonFiltersProps) {
   const icons:IconPaths = {
-    'Ordinary Drink': '/src/images/OrdinaryDrink.svg',
-    Cocktail: '/src/images/cocktail.svg',
-    Shake: '/src/images/shake.svg',
-    'Other / Unknown': '/src/images/other.svg',
-    Cocoa: '/src/images/cocoa.svg',
-    Beef: '/src/images/beefCategory.svg',
-    Breakfast: '/src/images/breakfastCategory.svg',
-    Chicken: '/src/images/chickenCategory.svg',
-    Dessert: '/src/images/dessertCategory.svg',
-    Goat: '/src/images/goatCategory.svg',
+    'Ordinary Drink': OrdinaryDrinkImage,
+    Cocktail: CocktailImage,
+    Shake: ShakeImage,
+    'Other / Unknown': OtherUnknownImage,
+    Cocoa: CocoaImage,
+    Beef: BeefImage,
+    Breakfast: BreakfastImage,
+    Chicken: ChickenImage,
+    Dessert: DessertImage,
+    Goat: GoatImage,
   };
 
   const icon = icons[category.strCategory as keyof IconPaths];
