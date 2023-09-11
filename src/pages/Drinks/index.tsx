@@ -4,10 +4,11 @@ import Recipes from '../../components/Recipes';
 import { RecipesContext } from '../../context/recipesContext';
 import { Drink } from '../../types';
 
+import RecipeCardSkeleton from '../../components/Skeleton/RecipeCardSkeleton';
 import styles from './drinks.module.css';
 
 function Drinks() {
-  const { recipes } = useContext(RecipesContext);
+  const { recipes, loading } = useContext(RecipesContext);
   const navigate = useNavigate();
 
   const drinks = recipes as Drink[];
@@ -19,29 +20,31 @@ function Drinks() {
       <ul
         className={ styles.recipe_card_container }
       >
-        {renderDrinks.map((recipe: Drink, index) => {
-          const { idDrink, strDrinkThumb, strDrink } = recipe;
-          return (
-            <li
-              key={ strDrink }
-              data-testid={ `${index}-recipe-card` }
-              className={ styles.recipe_card }
-            >
-              <button
-                type="button"
-                onClick={ () => navigate(`/drinks/${idDrink}`) }
-                className={ styles.card_button }
+        {loading ? renderDrinks.map((_, index) => (
+          <RecipeCardSkeleton key={ `skeleton-${index}` } />))
+          : renderDrinks.map((recipe: Drink, index) => {
+            const { idDrink, strDrinkThumb, strDrink } = recipe;
+            return (
+              <li
+                key={ strDrink }
+                data-testid={ `${index}-recipe-card` }
+                className={ styles.recipe_card }
               >
-                <img
-                  src={ strDrinkThumb }
-                  alt={ strDrink }
-                  data-testid={ `${index}-card-img` }
-                />
-                <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
-              </button>
-            </li>
-          );
-        })}
+                <button
+                  type="button"
+                  onClick={ () => navigate(`/drinks/${idDrink}`) }
+                  className={ styles.card_button }
+                >
+                  <img
+                    src={ strDrinkThumb }
+                    alt={ strDrink }
+                    data-testid={ `${index}-card-img` }
+                  />
+                  <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+                </button>
+              </li>
+            );
+          })}
       </ul>
     </>
   );

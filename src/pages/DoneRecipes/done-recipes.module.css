@@ -30,3 +30,7 @@
 .filter_btn img {
   width: 4rem;
 }
+
+.selected_filter {
+  color: var(--purple);
+}

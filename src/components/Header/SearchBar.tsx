@@ -13,10 +13,11 @@ const initialState: FormSearch = {
 function SearchBar({ pageTitle }: SearchBarProps) {
   const [formSearch, setFormSearch] = useState<FormSearch>(initialState);
   const navigate = useNavigate();
-  const { setRecipes } = useContext(RecipesContext);
+  const { setRecipes, handleLoading } = useContext(RecipesContext);
 
   const fetchRecipes = async (searchURL: string) => {
     try {
+      handleLoading();
       const response = await fetch(searchURL);
       const dataAPI = await response.json();
       return dataAPI;

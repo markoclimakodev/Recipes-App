@@ -4,10 +4,11 @@ import Recipes from '../../components/Recipes';
 import { RecipesContext } from '../../context/recipesContext';
 import { Meal } from '../../types';
 
+import RecipeCardSkeleton from '../../components/Skeleton/RecipeCardSkeleton';
 import styles from './meals.module.css';
 
 function Meals() {
-  const { recipes } = useContext(RecipesContext);
+  const { recipes, loading } = useContext(RecipesContext);
   const navigate = useNavigate();
 
   const meals = recipes as Meal[];
@@ -17,7 +18,9 @@ function Meals() {
     <>
       <Recipes type="meals" />
       <ul className={ styles.recipe_card_container }>
-        {renderMeals.map((recipe: Meal, index) => {
+        {loading ? renderMeals.map((_, index) => (
+          <RecipeCardSkeleton key={ `skeleton-${index}` } />
+        )) : (renderMeals.map((recipe: Meal, index) => {
           const { idMeal, strMealThumb, strMeal } = recipe;
           return (
             <li
@@ -39,7 +42,7 @@ function Meals() {
               </button>
             </li>
           );
-        })}
+        }))}
       </ul>
     </>
   );

@@ -6,13 +6,15 @@ import ButtonFilters from '../ButtonFilters';
 import allDrinksIcon from '../../images/AllDrinks.svg';
 import AllMealsIcon from '../../images/AllMealsCategories.svg';
 
+import FilterButtonsSkeleton from '../Skeleton/FilterButtonsSkeleton';
 import styles from './recipes.module.css';
 
 function Recipes({ type }:{ type: string }) {
-  const { setRecipes } = useContext(RecipesContext);
+  const { setRecipes, handleLoading } = useContext(RecipesContext);
 
   const [filtersButtons, setFiltersButtons] = useState<FiltersReturn[]>([]);
-  const [currentFilter, setCurrentFilter] = useState<string>();
+  const [currentFilter, setCurrentFilter] = useState<string>('All');
+  const [isLoading, setisLoading] = useState(true);
 
   const fetchFiltersButtons = useCallback(async () => {
     const urlFilters = {
@@ -25,6 +27,8 @@ function Recipes({ type }:{ type: string }) {
       setFiltersButtons(data[type]);
     } catch (error) {
       console.error('An error occurred:', error);
+    } finally {
+      setisLoading(false);
     }
   }, [type]);
 
@@ -37,12 +41,14 @@ function Recipes({ type }:{ type: string }) {
       const response = await fetch(urlAllRecipes[type as keyof ApiUrlType]);
       const data = await response.json();
       setRecipes(data[type]);
+      handleLoading();
     } catch (error) {
       console.error('An error occurred:', error);
     }
-  }, [type, setRecipes]);
+  }, [handleLoading, type, setRecipes]);
 
   const handleClick = async (category: string) => {
+    handleLoading();
     const urlsToFilterRecipes: ApiUrlType = {
       meals: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
       drinks: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=',
@@ -70,26 +76,34 @@ function Recipes({ type }:{ type: string }) {
 
   return (
     <section className={ styles.button_filters_container }>
-      <button
-        data-testid="All-category-filter"
-        onClick={ () => handleClick('All') }
-        type="button"
-        className={ styles.button_filter }
-      >
-        <img src={ type === 'meals' ? AllMealsIcon : allDrinksIcon } alt="All" />
-        All
+      {isLoading ? (<FilterButtonsSkeleton />) : (
+        <>
+          <button
+            data-testid="All-category-filter"
+            onClick={ () => handleClick('All') }
+            type="button"
+            className={ `${styles.button_filter} ${
+              currentFilter === 'All' ? styles.selected_filter : ''
+            }` }
+          >
+            <img src={ type === 'meals' ? AllMealsIcon : allDrinksIcon } alt="All" />
+            All
 
-      </button>
-      {filtersButtons.slice(0, 5)
-        .map((category:FiltersReturn) => {
-          return (
-            <ButtonFilters
-              key={ category.strCategory }
-              handleClick={ () => handleClick(category.strCategory) }
-              category={ category }
-            />
-          );
-        })}
+          </button>
+          {filtersButtons.slice(0, 5)
+            .map((category:FiltersReturn) => {
+              return (
+                <ButtonFilters
+                  key={ category.strCategory }
+                  handleClick={ () => handleClick(category.strCategory) }
+                  category={ category }
+                  selected={ category.strCategory === currentFilter }
+                />
+              );
+            })}
+
+        </>
+      )}
     </section>
   );
 }

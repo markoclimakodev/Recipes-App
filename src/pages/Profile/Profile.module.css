@@ -21,7 +21,6 @@
   display: flex;
   padding: 1.25rem;
   width: 100%;
-
 }
 
 .buttonsContainer button {
@@ -32,7 +31,13 @@
   width: auto;
 }
 
+.btnsDiv button:hover {
+  color: var(--purple);
+}
+
+
 .buttonsContainer button img {
   margin-right: 1rem;
   width: 2.3rem;
 }
+

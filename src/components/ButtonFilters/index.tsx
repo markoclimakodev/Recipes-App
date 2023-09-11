@@ -4,6 +4,8 @@ import styles from '../Recipes/recipes.module.css';
 type ButtonFiltersProps = {
   category: FiltersReturn
   handleClick: (category: string) => void
+  selected: boolean
+
 };
 
 type IconKey =
@@ -22,7 +24,7 @@ type IconKey =
     [key in IconKey]: string;
   };
 
-function ButtonFilters({ category, handleClick }:ButtonFiltersProps) {
+function ButtonFilters({ category, handleClick, selected }:ButtonFiltersProps) {
   const icons:IconPaths = {
     'Ordinary Drink': '/src/images/OrdinaryDrink.svg',
     Cocktail: '/src/images/cocktail.svg',
@@ -46,7 +48,12 @@ function ButtonFilters({ category, handleClick }:ButtonFiltersProps) {
       className={ styles.button_filter }
     >
       <img src={ icon } alt={ category.strCategory } />
-      <span>
+      <span
+        className={
+          `${styles.button_filter} ${selected
+            ? styles.selected_filter : ''}`
+            }
+      >
         {category.strCategory}
       </span>
     </button>

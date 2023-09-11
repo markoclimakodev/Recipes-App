@@ -41,7 +41,9 @@ function FavoritesRecipes() {
           type="button"
           id="all"
           onClick={ onClickFilter }
-          className={ styles.filter_btn }
+          className={ `${styles.filter_btn} ${
+            filter === 'all' ? styles.selected_filter : ''
+          }` }
         >
           <img src={ allRecipesIcon } alt="" srcSet="" />
           All
@@ -52,7 +54,9 @@ function FavoritesRecipes() {
           type="button"
           id="meal"
           onClick={ onClickFilter }
-          className={ styles.filter_btn }
+          className={ `${styles.filter_btn} ${
+            filter === 'meal' ? styles.selected_filter : ''
+          }` }
         >
           <img src={ foodIcon } alt="" srcSet="" />
           Food
@@ -62,7 +66,9 @@ function FavoritesRecipes() {
           type="button"
           id="drink"
           onClick={ onClickFilter }
-          className={ styles.filter_btn }
+          className={ `${styles.filter_btn} ${
+            filter === 'drink' ? styles.selected_filter : ''
+          }` }
         >
           <img src={ drinkIcon } alt="" />
           Drinks

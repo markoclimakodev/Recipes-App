@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import {
   DoneRecipesType,
   Drink,
@@ -37,12 +37,12 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
     );
   };
 
-  const handleLoading = () => {
+  const handleLoading = useCallback(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 800);
-  };
+  }, []);
 
   const handleFavoriteRecipes = (newFavoriteRecipe:FavoriteType) => {
     setFavoriteRecipes([...favoriteRecipes, newFavoriteRecipe]);

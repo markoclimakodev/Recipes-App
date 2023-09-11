@@ -2,9 +2,9 @@ import { useContext, useState } from 'react';
 import CardDoneRecipes from '../../components/CardDoneRecipes';
 import { RecipesContext } from '../../context/recipesContext';
 
-import allRecipesIcon from '../../images/AllRecipesIcon.svg';
 import drinkIcon from '../../images/AllDrinks.svg';
 import foodIcon from '../../images/AllMealsCategories.svg';
+import allRecipesIcon from '../../images/AllRecipesIcon.svg';
 
 import styles from './done-recipes.module.css';
 
@@ -43,7 +43,9 @@ function DoneRecipes() {
           type="button"
           id="all"
           onClick={ onClickFilter }
-          className={ styles.filter_btn }
+          className={ `${styles.filter_btn} ${
+            filter === 'all' ? styles.selected_filter : ''
+          }` }
         >
           <img src={ allRecipesIcon } alt="" srcSet="" />
           All
@@ -54,7 +56,9 @@ function DoneRecipes() {
           type="button"
           id="meal"
           onClick={ onClickFilter }
-          className={ styles.filter_btn }
+          className={ `${styles.filter_btn} ${
+            filter === 'meal' ? styles.selected_filter : ''
+          }` }
         >
           <img src={ foodIcon } alt="" srcSet="" />
           Food
@@ -64,7 +68,9 @@ function DoneRecipes() {
           type="button"
           id="drink"
           onClick={ onClickFilter }
-          className={ styles.filter_btn }
+          className={ `${styles.filter_btn} ${
+            filter === 'drink' ? styles.selected_filter : ''
+          }` }
         >
           <img src={ drinkIcon } alt="" />
           Drinks

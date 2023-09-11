@@ -20,3 +20,7 @@
 .button_filter span {
   width: 3.33rem;
 }
+
+.selected_filter {
+  color: var(--purple);
+}

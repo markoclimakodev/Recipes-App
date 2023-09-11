@@ -172,6 +172,7 @@ export type FavoriteType = {
 
 export type FiltersReturn = {
   strCategory: string;
+  selected:boolean
 };
 
 export type DoneRecipesType = {
