@@ -4,6 +4,13 @@ import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import { PathNames } from '../../types';
 
+import DoneRecipesIcon from '../../images/doneRecipesPageIcon.svg';
+import DrinksIcon from '../../images/drinksPageIcon.svg';
+import FavoriteRecipesIcon from '../../images/favoritesPageIcon.svg';
+import logoIcon from '../../images/logo.svg';
+import MealsIcon from '../../images/mealsPageicon.svg';
+import ProfileIcon from '../../images/profilePageIcon.svg';
+
 import styles from './header.module.css';
 import SearchBar from './SearchBar';
 
@@ -14,15 +21,12 @@ function Header() {
   const path = location.pathname.replace('/', '');
 
   const pageInfo: PathNames = {
-    meals: { title: 'Meals', icon: '/src/images/mealsPageicon.svg' },
-    drinks: { title: 'Drinks', icon: '/src/images/drinksPageIcon.svg' },
-    profile: { title: 'Profile', icon: '/src/images/profilePageIcon.svg' },
-    'done-recipes': {
-      title: 'Done Recipes',
-      icon: '/src/images/doneRecipesPageIcon.svg' },
-    'favorite-recipes': {
-      title: 'Favorite Recipes',
-      icon: '/src/images/favoritesPageIcon.svg' },
+    meals: { title: 'Meals', icon: MealsIcon },
+    drinks: { title: 'Drinks', icon: DrinksIcon },
+    profile: { title: 'Profile', icon: ProfileIcon },
+    'done-recipes': { title: 'Done Recipes', icon: DoneRecipesIcon },
+    'favorite-recipes': { title: 'Favorite Recipes', icon: FavoriteRecipesIcon },
+
   };
 
   const pageTitle = pageInfo[path as keyof PathNames].title;
@@ -36,7 +40,7 @@ function Header() {
   return (
     <header className={ styles.header }>
       <nav className={ styles.navbar }>
-        <img src="/src/images/logo.svg" alt="logo" />
+        <img src={ logoIcon } alt="logo" />
 
         <section className={ styles.nav_actions }>
           {!hideSearchIcon && (
