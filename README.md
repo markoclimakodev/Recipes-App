@@ -1,4 +1,4 @@
-## About
+## Recipes App
 
 This project is a web application that allows users to find, save, and share recipes for food and drinks.
 
