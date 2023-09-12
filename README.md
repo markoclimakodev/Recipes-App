@@ -31,6 +31,7 @@ To use the project, follow these steps:
 4. Click "Favorite" to add the recipe to your favorites.
 5. Click "Share" to share the recipe with your friends and family.
 6. Click "Start recipe" to start cooking.
+7. When you are finished cooking, click the "Finish recipe" button to save the recipe to your list of finished recipes.
 
 ## Getting Started
 1. Clone this repository:
