@@ -12,7 +12,6 @@ function Drinks() {
   const navigate = useNavigate();
 
   const drinks = recipes as Drink[];
-  const renderDrinks = drinks.length < 12 ? drinks : drinks.slice(0, 12);
 
   return (
     <>
@@ -20,9 +19,9 @@ function Drinks() {
       <ul
         className={ styles.recipe_card_container }
       >
-        {loading ? renderDrinks.map((_, index) => (
+        {loading ? drinks.map((_, index) => (
           <RecipeCardSkeleton key={ `skeleton-${index}` } />))
-          : renderDrinks.map((recipe: Drink, index) => {
+          : drinks.map((recipe: Drink, index) => {
             const { idDrink, strDrinkThumb, strDrink } = recipe;
             return (
               <li
