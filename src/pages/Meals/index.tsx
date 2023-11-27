@@ -12,15 +12,14 @@ function Meals() {
   const navigate = useNavigate();
 
   const meals = recipes as Meal[];
-  const renderMeals = meals
 
   return (
     <>
       <Recipes type="meals" />
       <ul className={ styles.recipe_card_container }>
-        {loading ? renderMeals.map((_, index) => (
+        {loading ? meals.map((_, index) => (
           <RecipeCardSkeleton key={ `skeleton-${index}` } />
-        )) : (renderMeals.map((recipe: Meal, index) => {
+        )) : (meals.map((recipe: Meal, index) => {
           const { idMeal, strMealThumb, strMeal } = recipe;
           return (
             <li
