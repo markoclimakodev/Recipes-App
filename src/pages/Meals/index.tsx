@@ -12,7 +12,7 @@ function Meals() {
   const navigate = useNavigate();
 
   const meals = recipes as Meal[];
-  const renderMeals = meals.length < 12 ? meals : meals.slice(0, 12);
+  const renderMeals = meals
 
   return (
     <>
